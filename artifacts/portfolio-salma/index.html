@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio · Salma — Professeure Stagiaire Informatique</title>
+  <meta name="description" content="Portfolio numérique professionnel de Salma, professeure stagiaire en Informatique au CRMEF Rabat 2024–2025." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">✦ Portfolio · Salma</div>
+  </div>
+
+  <div class="sidebar-profile">
+    <div class="avatar-wrap">
+      <div class="avatar">S</div>
+      <div class="avatar-ring"></div>
+    </div>
+    <div class="profile-info">
+      <h2 class="profile-name">Salma</h2>
+      <p class="profile-role">Professeure Stagiaire · Informatique</p>
+      <p class="profile-location"><i class="ti ti-map-pin"></i> Rabat, Maroc</p>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#accueil" class="nav-item active" data-section="accueil">
+      <i class="ti ti-home"></i>
+      <span>Accueil</span>
+    </a>
+    <a href="#cv" class="nav-item" data-section="cv">
+      <i class="ti ti-id-badge"></i>
+      <span>CV &amp; Parcours</span>
+    </a>
+    <a href="#rapport" class="nav-item" data-section="rapport">
+      <i class="ti ti-report"></i>
+      <span>Rapport de Stage</span>
+    </a>
+    <a href="#documents" class="nav-item" data-section="documents">
+      <i class="ti ti-folder"></i>
+      <span>Mes Documents</span>
+      <span class="nav-badge" id="nav-badge-count">0</span>
+    </a>
+    <a href="#reflexion" class="nav-item" data-section="reflexion">
+      <i class="ti ti-brain"></i>
+      <span>Analyse Réflexive</span>
+    </a>
+    <a href="#tice" class="nav-item" data-section="tice">
+      <i class="ti ti-device-laptop"></i>
+      <span>Intégration TICE</span>
+    </a>
+    <a href="#productions" class="nav-item" data-section="productions">
+      <i class="ti ti-sparkles"></i>
+      <span>Productions</span>
+    </a>
+    <a href="#contact" class="nav-item" data-section="contact">
+      <i class="ti ti-mail"></i>
+      <span>Contact</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <p>Lycée Hommane El Fetouaki</p>
+    <p>CRMEF Rabat · 2024–2025</p>
+  </div>
+
+  <button class="sidebar-toggle" id="sidebarToggle">
+    <i class="ti ti-layout-sidebar-left-collapse"></i>
+  </button>
+</aside>
+
+<!-- MOBILE BURGER -->
+<button class="burger" id="burgerBtn">
+  <i class="ti ti-menu-2"></i>
+</button>
+<div class="overlay" id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main class="main-content" id="mainContent">
+
+  <!-- ===== SECTION 1 : ACCUEIL ===== -->
+  <section id="accueil" class="section active">
+    <div class="hero-banner">
+      <div class="hero-bg-grid"></div>
+      <div class="hero-content">
+        <div class="hero-chips">
+          <span class="chip"><i class="ti ti-school"></i> CRMEF Rabat</span>
+          <span class="chip"><i class="ti ti-certificate"></i> Stagiaire 2024–2025</span>
+          <span class="chip"><i class="ti ti-cloud"></i> Master Cloud Computing</span>
+        </div>
+        <h1 class="hero-name">Salma</h1>
+        <p class="hero-title"><em>Professeure Stagiaire en Informatique</em></p>
+        <p class="hero-desc">Lycée Hommane El Fetouaki · Secondaire Qualifiant · Académie Rabat-Salé-Kénitra</p>
+        <a href="#documents" class="btn-hero nav-trigger" data-target="documents">
+          <i class="ti ti-folder-open"></i> Voir mes documents
+        </a>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon"><i class="ti ti-files"></i></div>
+        <div class="kpi-value" data-count="12">0</div>
+        <div class="kpi-label">Documents produits</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon"><i class="ti ti-clipboard-list"></i></div>
+        <div class="kpi-value" data-count="4">0</div>
+        <div class="kpi-label">Fiches de préparation</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon"><i class="ti ti-school"></i></div>
+        <div class="kpi-value kpi-text">M2</div>
+        <div class="kpi-label">Niveau académique</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon"><i class="ti ti-devices"></i></div>
+        <div class="kpi-value" data-count="6">0</div>
+        <div class="kpi-label">Outils TICE maîtrisés</div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <blockquote>
+        <i class="ti ti-quote quote-icon"></i>
+        <p>"Enseigner, c'est apprendre deux fois."</p>
+        <cite>— Joseph Joubert</cite>
+      </blockquote>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-icon"><i class="ti ti-user-circle"></i></div>
+        <h3>Profil</h3>
+        <p>Étudiante en Master 2 Génie Logiciel &amp; Cloud Computing, passionnée par l'enseignement des sciences informatiques et la pédagogie active.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon"><i class="ti ti-target"></i></div>
+        <h3>Mission</h3>
+        <p>Développer les compétences numériques des élèves du secondaire qualifiant en rendant l'informatique accessible, créative et engageante.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon"><i class="ti ti-bulb"></i></div>
+        <h3>Approche</h3>
+        <p>Pédagogie différenciée, intégration des TICE, apprentissage par projet et évaluation formative continue au cœur de chaque séance.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon"><i class="ti ti-rocket"></i></div>
+        <h3>Ambition</h3>
+        <p>Devenir une enseignante-chercheuse, contribuer à la transformation numérique de l'éducation au Maroc et encadrer les générations futures.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 2 : CV & PARCOURS ===== -->
+  <section id="cv" class="section">
+    <div class="section-header">
+      <h2 class="section-title">CV &amp; Parcours</h2>
+      <p class="section-subtitle">Formation académique, compétences et expériences</p>
+    </div>
+
+    <div class="cv-grid">
+      <div class="cv-col">
+        <h3 class="subsection-title"><i class="ti ti-code"></i> Compétences Techniques</h3>
+        <div class="skills-list">
+          <div class="skill-item">
+            <div class="skill-header"><span>Python &amp; Algorithmique</span><span class="skill-pct">85%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>HTML / CSS / JavaScript</span><span class="skill-pct">80%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>Cloud Computing (AWS / Azure)</span><span class="skill-pct">70%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>Bases de données (SQL)</span><span class="skill-pct">75%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>Réseaux &amp; Systèmes</span><span class="skill-pct">65%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>Replit IDE &amp; Outils Dev</span><span class="skill-pct">78%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title mt-3"><i class="ti ti-books"></i> Compétences Pédagogiques</h3>
+        <div class="skills-list">
+          <div class="skill-item">
+            <div class="skill-header"><span>Conception de séquences</span><span class="skill-pct">88%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>Gestion de classe</span><span class="skill-pct">80%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>Évaluation formative</span><span class="skill-pct">82%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="82"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>Intégration TICE</span><span class="skill-pct">90%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title mt-3"><i class="ti ti-language"></i> Langues</h3>
+        <div class="lang-list">
+          <div class="lang-item">
+            <span class="lang-name">Arabe</span>
+            <div class="lang-dots">
+              <span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span>
+            </div>
+            <span class="lang-level">Natif</span>
+          </div>
+          <div class="lang-item">
+            <span class="lang-name">Français</span>
+            <div class="lang-dots">
+              <span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot"></span>
+            </div>
+            <span class="lang-level">B2</span>
+          </div>
+          <div class="lang-item">
+            <span class="lang-name">Anglais</span>
+            <div class="lang-dots">
+              <span class="dot active"></span><span class="dot active"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <span class="lang-level">B1</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-col">
+        <h3 class="subsection-title"><i class="ti ti-timeline"></i> Parcours Académique</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2024–2025</div>
+              <h4>CRMEF Rabat</h4>
+              <p>Formation initiale en Sciences de l'Éducation — Informatique Secondaire Qualifiant</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2023–En cours</div>
+              <h4>Master 2 — Génie Logiciel &amp; Cloud Computing</h4>
+              <p>Spécialisation en architectures cloud, conteneurisation et développement logiciel avancé</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2022–2023</div>
+              <h4>Licence en Informatique</h4>
+              <p>Bases théoriques et pratiques en algorithmique, programmation et réseaux</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2020–2022</div>
+              <h4>BTS — Développement des Systèmes d'Information (DSI)</h4>
+              <p>Développement web, bases de données et gestion des systèmes d'information</p>
+            </div>
+          </div>
+          <div class="timeline-item last">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2020</div>
+              <h4>Baccalauréat Sciences Mathématiques</h4>
+              <p>Mention Bien</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title mt-3"><i class="ti ti-building"></i> Informations de Stage</h3>
+        <div class="stage-grid">
+          <div class="stage-info"><span class="stage-label">Établissement</span><span class="stage-val">Lycée Hommane El Fetouaki</span></div>
+          <div class="stage-info"><span class="stage-label">Ville</span><span class="stage-val">Rabat</span></div>
+          <div class="stage-info"><span class="stage-label">Niveau</span><span class="stage-val">Secondaire Qualifiant</span></div>
+          <div class="stage-info"><span class="stage-label">Matière</span><span class="stage-val">Informatique</span></div>
+          <div class="stage-info"><span class="stage-label">Formation</span><span class="stage-val">CRMEF Rabat</span></div>
+          <div class="stage-info"><span class="stage-label">Académie</span><span class="stage-val">AREF Rabat-Salé-Kénitra</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3 : RAPPORT DE STAGE ===== -->
+  <section id="rapport" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Rapport de Stage</h2>
+      <p class="section-subtitle">Bilan de l'année de formation au Lycée Hommane El Fetouaki</p>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon"><i class="ti ti-clipboard-list"></i></div>
+        <div class="kpi-value" data-count="4">0</div>
+        <div class="kpi-label">Fiches de préparation</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon"><i class="ti ti-eye"></i></div>
+        <div class="kpi-value" data-count="3">0</div>
+        <div class="kpi-label">Grilles d'observation</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon"><i class="ti ti-presentation"></i></div>
+        <div class="kpi-value" data-count="3">0</div>
+        <div class="kpi-label">Supports de cours</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon"><i class="ti ti-file-text"></i></div>
+        <div class="kpi-value" data-count="1">0</div>
+        <div class="kpi-label">Projet de fin de formation</div>
+      </div>
+    </div>
+
+    <div class="rapport-cards">
+      <div class="rapport-card">
+        <div class="rapport-card-icon"><i class="ti ti-clipboard-list"></i></div>
+        <h3>Fiches de Préparation</h3>
+        <p>Séances structurées selon les compétences du programme officiel, avec objectifs, déroulement et évaluation formative intégrée.</p>
+        <a href="#documents" class="link-btn nav-trigger" data-target="documents"><i class="ti ti-arrow-right"></i> Consulter</a>
+      </div>
+      <div class="rapport-card">
+        <div class="rapport-card-icon"><i class="ti ti-eye"></i></div>
+        <h3>Grilles d'Observation</h3>
+        <p>Outils d'évaluation par compétences permettant une observation structurée des pratiques pédagogiques lors des séances.</p>
+        <a href="#documents" class="link-btn nav-trigger" data-target="documents"><i class="ti ti-arrow-right"></i> Consulter</a>
+      </div>
+      <div class="rapport-card">
+        <div class="rapport-card-icon"><i class="ti ti-presentation"></i></div>
+        <h3>Supports de Cours</h3>
+        <p>Présentations interactives, tutoriels et ressources numériques développés pour faciliter l'apprentissage des élèves.</p>
+        <a href="#documents" class="link-btn nav-trigger" data-target="documents"><i class="ti ti-arrow-right"></i> Consulter</a>
+      </div>
+      <div class="rapport-card">
+        <div class="rapport-card-icon"><i class="ti ti-file-text"></i></div>
+        <h3>Projet de Fin de Formation</h3>
+        <p>Mémoire de recherche synthétisant l'ensemble du parcours de stage et proposant des axes d'amélioration pédagogique.</p>
+        <a href="#documents" class="link-btn nav-trigger" data-target="documents"><i class="ti ti-arrow-right"></i> Consulter</a>
+      </div>
+    </div>
+
+    <div class="etablissement-block">
+      <div class="etab-header">
+        <div class="etab-icon"><i class="ti ti-building-community"></i></div>
+        <div>
+          <h3>Lycée Hommane El Fetouaki</h3>
+          <p>Établissement d'accueil du stage de formation initiale</p>
+        </div>
+      </div>
+      <div class="etab-details">
+        <div class="etab-detail"><i class="ti ti-map-pin"></i><span>Rabat — Académie AREF Rabat-Salé-Kénitra</span></div>
+        <div class="etab-detail"><i class="ti ti-users"></i><span>Secondaire Qualifiant — Section Informatique</span></div>
+        <div class="etab-detail"><i class="ti ti-calendar"></i><span>Année scolaire 2024–2025</span></div>
+        <div class="etab-detail"><i class="ti ti-school"></i><span>Encadrement CRMEF Rabat</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 4 : MES DOCUMENTS ===== -->
+  <section id="documents" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Mes Documents</h2>
+      <p class="section-subtitle">Ressources pédagogiques produites durant le stage</p>
+    </div>
+
+    <div class="docs-toolbar">
+      <div class="search-wrap">
+        <i class="ti ti-search"></i>
+        <input type="search" id="docSearch" placeholder="Rechercher un document..." autocomplete="off">
+      </div>
+      <div class="filter-pills" id="filterPills">
+        <button class="pill active" data-filter="all">Tous</button>
+        <button class="pill" data-filter="fiches">Fiches</button>
+        <button class="pill" data-filter="grilles">Grilles</button>
+        <button class="pill" data-filter="supports">Supports</button>
+        <button class="pill" data-filter="pff">PFF</button>
+        <button class="pill" data-filter="productions">Productions</button>
+      </div>
+    </div>
+
+    <div class="folders-grid" id="foldersGrid">
+      <!-- Dynamically rendered by app.js -->
+    </div>
+  </section>
+
+  <!-- ===== SECTION 5 : ANALYSE RÉFLEXIVE ===== -->
+  <section id="reflexion" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Analyse Réflexive</h2>
+      <p class="section-subtitle">Retour critique sur la pratique pédagogique</p>
+    </div>
+
+    <div class="reflexion-grid">
+      <div class="reflexion-card strengths">
+        <h3><i class="ti ti-thumb-up"></i> Points Forts</h3>
+        <ul>
+          <li><i class="ti ti-check"></i> Maîtrise du contenu disciplinaire en informatique</li>
+          <li><i class="ti ti-check"></i> Intégration efficace des outils TICE dans les séances</li>
+          <li><i class="ti ti-check"></i> Capacité d'adaptation au profil des élèves</li>
+          <li><i class="ti ti-check"></i> Créativité dans la conception des supports pédagogiques</li>
+          <li><i class="ti ti-check"></i> Bonne gestion du temps de la séance</li>
+        </ul>
+      </div>
+      <div class="reflexion-card axes">
+        <h3><i class="ti ti-trending-up"></i> Axes d'Amélioration</h3>
+        <ul>
+          <li><i class="ti ti-arrow-right"></i> Renforcer les techniques de questionnement socratique</li>
+          <li><i class="ti ti-arrow-right"></i> Diversifier davantage les modalités d'évaluation</li>
+          <li><i class="ti ti-arrow-right"></i> Améliorer la différenciation pédagogique</li>
+          <li><i class="ti ti-arrow-right"></i> Développer les activités de travail collaboratif</li>
+          <li><i class="ti ti-arrow-right"></i> Approfondir la gestion des situations conflictuelles</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="journal-block">
+      <h3 class="subsection-title"><i class="ti ti-notebook"></i> Journal Réflexif</h3>
+      <div class="journal-entries">
+        <div class="journal-entry">
+          <div class="journal-date">Octobre 2024</div>
+          <h4>Première immersion en classe</h4>
+          <p>La prise de contact avec les élèves a révélé des niveaux très hétérogènes. J'ai ajusté mon approche en proposant des activités différenciées dès la deuxième séance, ce qui a amélioré la participation globale.</p>
+        </div>
+        <div class="journal-entry">
+          <div class="journal-date">Décembre 2024</div>
+          <h4>Intégration de Kahoot en classe</h4>
+          <p>L'utilisation de Kahoot pour la révision des notions de base en algorithmique a été un véritable catalyseur de motivation. Les élèves les plus discrets ont activement participé, signe d'une dynamique inclusive.</p>
+        </div>
+        <div class="journal-entry">
+          <div class="journal-date">Février 2025</div>
+          <h4>Projet de programmation en Python</h4>
+          <p>La mise en place d'un mini-projet collaboratif sur Replit a permis aux élèves de développer leur autonomie et leur esprit de résolution de problèmes. Une expérience riche, à reproduire et approfondir.</p>
+        </div>
+        <div class="journal-entry">
+          <div class="journal-date">Avril 2025</div>
+          <h4>Bilan de mi-stage</h4>
+          <p>Après six mois, je mesure le chemin parcouru : de stagiaire observatrice à praticienne réflexive. Chaque défi rencontré a été une opportunité de croissance professionnelle et personnelle.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="autoeval-block">
+      <h3 class="subsection-title"><i class="ti ti-star"></i> Autoévaluation CRMEF</h3>
+      <div class="autoeval-table-wrap">
+        <table class="autoeval-table">
+          <thead>
+            <tr>
+              <th>Compétence</th>
+              <th>Niveau</th>
+              <th>Évaluation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Maîtrise disciplinaire</td>
+              <td><div class="stars" data-stars="4"></div></td>
+              <td><span class="eval-badge good">Bien</span></td>
+            </tr>
+            <tr>
+              <td>Planification pédagogique</td>
+              <td><div class="stars" data-stars="4"></div></td>
+              <td><span class="eval-badge good">Bien</span></td>
+            </tr>
+            <tr>
+              <td>Gestion de classe</td>
+              <td><div class="stars" data-stars="3"></div></td>
+              <td><span class="eval-badge medium">Assez bien</span></td>
+            </tr>
+            <tr>
+              <td>Évaluation des apprentissages</td>
+              <td><div class="stars" data-stars="4"></div></td>
+              <td><span class="eval-badge good">Bien</span></td>
+            </tr>
+            <tr>
+              <td>Intégration des TICE</td>
+              <td><div class="stars" data-stars="5"></div></td>
+              <td><span class="eval-badge excellent">Excellent</span></td>
+            </tr>
+            <tr>
+              <td>Communication professionnelle</td>
+              <td><div class="stars" data-stars="4"></div></td>
+              <td><span class="eval-badge good">Bien</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 6 : INTÉGRATION TICE ===== -->
+  <section id="tice" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Intégration TICE</h2>
+      <p class="section-subtitle">Technologies de l'Information et de la Communication pour l'Enseignement</p>
+    </div>
+
+    <div class="tice-grid">
+      <div class="tice-card">
+        <div class="tice-logo kahoot"><i class="ti ti-device-gamepad-2"></i></div>
+        <h3>Kahoot!</h3>
+        <p>Quiz interactifs pour la révision et l'évaluation formative. Favorise l'engagement et la compétition saine en classe.</p>
+        <div class="tice-tags"><span>Quiz</span><span>Gamification</span></div>
+      </div>
+      <div class="tice-card">
+        <div class="tice-logo quizizz"><i class="ti ti-trophy"></i></div>
+        <h3>Quizizz</h3>
+        <p>Évaluations différenciées avec feedback immédiat. Permet un travail à rythme personnalisé adapté à chaque élève.</p>
+        <div class="tice-tags"><span>Évaluation</span><span>Différenciation</span></div>
+      </div>
+      <div class="tice-card">
+        <div class="tice-logo powerpoint"><i class="ti ti-presentation"></i></div>
+        <h3>PowerPoint</h3>
+        <p>Conception de supports visuels dynamiques avec animations et infographies pour illustrer les concepts informatiques.</p>
+        <div class="tice-tags"><span>Présentation</span><span>Visuel</span></div>
+      </div>
+      <div class="tice-card">
+        <div class="tice-logo replit"><i class="ti ti-code"></i></div>
+        <h3>Replit IDE</h3>
+        <p>Environnement de développement en ligne pour les séances de programmation Python. Accessible sans installation.</p>
+        <div class="tice-tags"><span>Programmation</span><span>Python</span></div>
+      </div>
+      <div class="tice-card">
+        <div class="tice-logo videos"><i class="ti ti-video"></i></div>
+        <h3>Vidéos Pédagogiques</h3>
+        <p>Capsules vidéo et tutoriels pour l'apprentissage inversé. Supports disponibles en arabe et en français.</p>
+        <div class="tice-tags"><span>Classe inversée</span><span>Autonomie</span></div>
+      </div>
+      <div class="tice-card">
+        <div class="tice-logo classroom"><i class="ti ti-brand-google"></i></div>
+        <h3>Google Classroom</h3>
+        <p>Plateforme de gestion des cours, dépôt de devoirs et communication avec les élèves hors temps de classe.</p>
+        <div class="tice-tags"><span>LMS</span><span>Communication</span></div>
+      </div>
+    </div>
+
+    <div class="tice-analyse">
+      <h3 class="subsection-title"><i class="ti ti-analyze"></i> Analyse Critique</h3>
+      <p>L'intégration des TICE dans mon enseignement ne s'est pas limitée à la technicité. Elle a répondu à de véritables besoins pédagogiques : différenciation, motivation, feedback immédiat et développement de l'autonomie. Cependant, j'ai aussi appris à maîtriser les risques : dépendance aux outils, fracture numérique, ou encore séances trop centrées sur la technologie au détriment des apprentissages fondamentaux. L'outil ne remplace jamais la pédagogie ; il la potentialise.</p>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 7 : PRODUCTIONS ===== -->
+  <section id="productions" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Productions Réalisées</h2>
+      <p class="section-subtitle">Créations pédagogiques et réalisations numériques durant le stage</p>
+    </div>
+
+    <div class="productions-grid">
+      <div class="production-card">
+        <div class="prod-tag tag-cours">Cours</div>
+        <div class="prod-icon"><i class="ti ti-brand-python"></i></div>
+        <h3>Séquence Python — Initiation</h3>
+        <p>Séquence pédagogique complète de 6 séances sur l'initiation à Python : variables, boucles, fonctions et mini-projets.</p>
+        <div class="prod-meta"><i class="ti ti-calendar"></i> Nov. 2024</div>
+      </div>
+      <div class="production-card">
+        <div class="prod-tag tag-quiz">Évaluation</div>
+        <div class="prod-icon"><i class="ti ti-device-gamepad-2"></i></div>
+        <h3>Quiz Kahoot — Algorithmique</h3>
+        <p>Série de 5 quiz interactifs couvrant les notions fondamentales d'algorithmique du programme de 2ème année Bac.</p>
+        <div class="prod-meta"><i class="ti ti-calendar"></i> Déc. 2024</div>
+      </div>
+      <div class="production-card">
+        <div class="prod-tag tag-projet">Projet</div>
+        <div class="prod-icon"><i class="ti ti-code-circle"></i></div>
+        <h3>Projet Collaboratif Replit</h3>
+        <p>Mini-projet de développement d'une calculatrice en Python réalisé en binômes sur Replit, avec présentation finale.</p>
+        <div class="prod-meta"><i class="ti ti-calendar"></i> Fév. 2025</div>
+      </div>
+      <div class="production-card">
+        <div class="prod-tag tag-support">Support</div>
+        <div class="prod-icon"><i class="ti ti-presentation"></i></div>
+        <h3>Présentation — Réseaux Informatiques</h3>
+        <p>Support de cours animé sur les architectures réseau : modèle OSI, protocoles TCP/IP, illustration par schémas interactifs.</p>
+        <div class="prod-meta"><i class="ti ti-calendar"></i> Jan. 2025</div>
+      </div>
+      <div class="production-card">
+        <div class="prod-tag tag-rapport">Rapport</div>
+        <div class="prod-icon"><i class="ti ti-file-text"></i></div>
+        <h3>Projet de Fin de Formation (PFF)</h3>
+        <p>Mémoire de recherche sur l'apport des TICE dans l'enseignement de l'informatique au secondaire qualifiant au Maroc.</p>
+        <div class="prod-meta"><i class="ti ti-calendar"></i> Mai 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 8 : CONTACT ===== -->
+  <section id="contact" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-subtitle">Pour toute question ou collaboration</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Informations</h3>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon"><i class="ti ti-building-community"></i></div>
+            <div>
+              <p class="contact-label">Établissement de stage</p>
+              <p class="contact-value">Lycée Hommane El Fetouaki, Rabat</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="ti ti-school"></i></div>
+            <div>
+              <p class="contact-label">Formation</p>
+              <p class="contact-value">CRMEF Rabat · Informatique · Secondaire Qualifiant</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="ti ti-map-2"></i></div>
+            <div>
+              <p class="contact-label">Académie</p>
+              <p class="contact-value">AREF Rabat-Salé-Kénitra</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="ti ti-calendar"></i></div>
+            <div>
+              <p class="contact-label">Année scolaire</p>
+              <p class="contact-value">2024–2025</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap">
+        <h3>Message</h3>
+        <form class="contact-form" id="contactForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="formName">Nom complet</label>
+              <input type="text" id="formName" placeholder="Votre nom" required>
+            </div>
+            <div class="form-group">
+              <label for="formEmail">Email</label>
+              <input type="email" id="formEmail" placeholder="votre@email.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="formSubject">Objet</label>
+            <input type="text" id="formSubject" placeholder="Objet de votre message">
+          </div>
+          <div class="form-group">
+            <label for="formMessage">Message</label>
+            <textarea id="formMessage" rows="5" placeholder="Votre message..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">
+            <i class="ti ti-send"></i> Envoyer le message
+          </button>
+        </form>
+        <div id="formSuccess" class="form-success hidden">
+          <i class="ti ti-circle-check"></i>
+          <p>Merci pour votre message ! Je vous répondrai dans les plus brefs délais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- DOCUMENT MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="docModal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Document</h3>
+      <button class="modal-close" id="modalClose"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- iframe or img loaded here -->
+    </div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

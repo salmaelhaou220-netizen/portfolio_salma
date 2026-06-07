@@ -1,0 +1,116 @@
+Crée-moi un portfolio numérique professionnel en HTML, CSS et JavaScript 
+(fichiers séparés : index.html, style.css, app.js).
+
+Je suis Salma, professeure stagiaire en Informatique au CRMEF Rabat (2024–2025),
+en stage au Lycée Hommane El Fetouaki à Rabat. Master 2 Cloud Computing en cours.
+
+=== LOGIQUE FICHIERS (IMPORTANTE) ===
+Ce portfolio est PUBLIC. Les visiteurs (jury, formateurs) peuvent UNIQUEMENT
+visualiser et télécharger les fichiers. Il n'y a AUCUN bouton d'upload,
+AUCUN drag & drop. Tous les fichiers sont hébergés directement dans le projet
+dans un dossier /docs/ organisé en sous-dossiers par catégorie.
+
+Structure des fichiers dans le projet :
+docs/fiches/     → fiches de préparation (PDF, DOCX)
+docs/grilles/    → grilles d'observation (JPG, PDF)
+docs/supports/   → supports de cours (PDF, PPTX)
+docs/pff/        → projet de fin de formation (PDF)
+docs/productions/→ autres productions (PDF)
+
+Chaque document dans le code est déclaré comme un objet avec :
+{ name, description, date, type, path: 'docs/fiches/nom_fichier.pdf' }
+
+Le path est un chemin relatif vers le vrai fichier dans le projet.
+
+=== FONCTIONNALITÉS DOCUMENTS ===
+- Bouton 👁 VISUALISER : ouvre une modale avec iframe pour PDF,
+  ou balise <img> pour les images. Plein écran, fermeture par Escape ou clic overlay.
+- Bouton ⬇ TÉLÉCHARGER : crée un lien <a href="docs/..." download> et déclenche le clic.
+- PAS de suppression, PAS d'upload, PAS de drag & drop.
+- Les fichiers sont en lecture seule pour les visiteurs.
+
+=== DESIGN ===
+- Style moderne, créatif, premium et professionnel
+- Sidebar fixe à gauche (fond sombre #0f0f1a) avec navigation
+- Contenu principal à droite sur fond clair (#fafaf8)
+- Palette : doré (#b8860b) accent, blanc cassé, noir profond
+- Google Fonts : Playfair Display (titres) + Inter (texte)
+- Tabler Icons CDN
+- Animations fluides, barres de compétences animées, hover effects
+- 100% responsive
+
+=== SIDEBAR ===
+- Logo "✦ Portfolio · Salma"
+- Photo de profil (placeholder initiale "S", pas d'upload)
+- Nom, rôle, localisation
+- Menu navigation avec icônes et badge compteur documents
+- Pied : établissement + année
+
+=== 8 SECTIONS ===
+
+1. ACCUEIL
+- Bannière hero sombre avec nom, titre italique doré, description, chips
+- 4 KPI : nombre de documents, fiches de préparation, niveau M2, outils TICE
+- Citation de Joubert
+- 4 cartes À propos en grille 2x2
+
+2. CV & PARCOURS
+- Barres de compétences animées (techniques + pédagogiques)
+- Points de langue (Arabe natif, Français B2, Anglais B1)
+- Timeline académique : Bac 2020 → BTS DSI 2022 → Licence 2023 → Master 2 → CRMEF 2025
+- Infos stage en mini-grille
+
+3. RAPPORT DE STAGE
+- 4 KPI (fiches, grilles, supports, PFF)
+- 4 cartes descriptives avec liens vers la section documents
+- Présentation de l'établissement
+
+4. MES DOCUMENTS
+- Barre de recherche live sur les noms de fichiers
+- Filtres catégories en pills (Tous / Fiches / Grilles / Supports / PFF / Productions)
+- 5 dossiers visuels en grille 3 colonnes, cliquables pour s'ouvrir/fermer
+- Liste des fichiers dans chaque dossier avec :
+    · Badge coloré selon type (PDF rouge, DOC bleu, PPT orange, IMG vert)
+    · Nom du fichier
+    · Description courte
+    · Date
+    · Bouton 👁 Visualiser (ouvre modale)
+    · Bouton ⬇ Télécharger
+- Modale de visualisation : iframe pour PDF, img pour images,
+  message "téléchargez pour ouvrir" pour DOCX/PPTX
+- NOTE IMPORTANTE : les fichiers n'existent pas encore dans le projet.
+  Utilise des chemins placeholder comme "docs/fiches/fiche1.pdf".
+  Quand un fichier n'existe pas encore, le bouton Visualiser affiche
+  un message élégant : "Ce document sera disponible prochainement".
+
+5. ANALYSE RÉFLEXIVE
+- Cartes points forts / axes d'amélioration
+- Journal réflexif
+- Tableau autoévaluation compétences CRMEF avec étoiles
+
+6. INTÉGRATION TICE
+- Grille 6 outils : Kahoot, Quizizz, PowerPoint, Replit IDE, Vidéos, Google Classroom
+- Analyse critique en bas
+
+7. PRODUCTIONS RÉALISÉES
+- Grille de 5 cards productions avec tag coloré
+
+8. CONTACT
+- Informations de contact à gauche
+- Formulaire élégant à droite (sans backend, juste visuel)
+
+=== DONNÉES PERSONNELLES ===
+Nom : Salma
+Établissement : Lycée Hommane El Fetouaki, Rabat
+Formation : CRMEF Rabat · Informatique · Secondaire Qualifiant
+Académie : AREF Rabat-Salé-Kénitra
+Master : Génie Logiciel · Cloud Computing · En cours
+Année : 2024–2025
+Citation : "Enseigner, c'est apprendre deux fois." — Joseph Joubert
+
+=== CONTRAINTES TECHNIQUES ===
+- Fichiers séparés : index.html, style.css, app.js
+- Vanilla JS uniquement, aucun framework
+- Google Fonts CDN + Tabler Icons CDN
+- Aucune dépendance npm
+- Compatible hébergement statique Replit
