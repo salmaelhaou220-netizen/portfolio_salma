@@ -67,6 +67,12 @@
     </a>
   </nav>
 
+  <div class="sidebar-admin">
+    <button class="nav-item admin-lock-btn" id="adminLockBtn" onclick="openLoginModal()">
+      <i class="ti ti-lock"></i><span>Administration</span>
+    </button>
+  </div>
+
   <div class="sidebar-footer">
     <p>Lycée Hommane El Fetouaki</p>
     <p>CRMEF Rabat · 2024–2025</p>
@@ -680,6 +686,91 @@
   </section>
 
 </main>
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer"></div>
+
+<!-- LOGIN MODAL -->
+<div class="admin-modal-overlay" id="loginOverlay">
+  <div class="admin-modal" id="loginModal">
+    <div class="admin-modal-header">
+      <div class="admin-modal-icon"><i class="ti ti-shield-lock"></i></div>
+      <h3>Accès Administration</h3>
+      <button class="modal-close" onclick="closeLoginModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="admin-modal-body">
+      <p class="admin-modal-hint">Entrez votre mot de passe pour gérer les documents du portfolio.</p>
+      <form id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label for="loginPassword">Mot de passe</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <p class="admin-error" id="loginError"></p>
+        <button type="submit" class="btn-submit" id="loginSubmitBtn">
+          <i class="ti ti-login"></i> Se connecter
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- DOC FORM MODAL -->
+<div class="admin-modal-overlay" id="docFormOverlay">
+  <div class="admin-modal admin-modal-wide" id="docFormModal">
+    <div class="admin-modal-header">
+      <div class="admin-modal-icon"><i class="ti ti-file-plus"></i></div>
+      <h3 id="docFormTitle">Ajouter un document</h3>
+      <button class="modal-close" onclick="closeDocFormModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="admin-modal-body">
+      <form id="docForm" autocomplete="off">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select name="fCategory" required>
+              <option value="fiches">Fiches de Préparation</option>
+              <option value="grilles">Grilles d'Observation</option>
+              <option value="supports">Supports de Cours</option>
+              <option value="pff">Projet de Fin de Formation</option>
+              <option value="productions">Autres Productions</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Type de fichier</label>
+            <select name="fType" required>
+              <option value="pdf">PDF</option>
+              <option value="doc">DOC / DOCX</option>
+              <option value="ppt">PPT / PPTX</option>
+              <option value="img">Image (JPG, PNG)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Nom du fichier</label>
+          <input type="text" name="fName" placeholder="ex : Fiche_Python_Variables.pdf" required>
+        </div>
+        <div class="form-group">
+          <label>Description courte</label>
+          <input type="text" name="fDesc" placeholder="ex : Séance sur les variables Python">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date</label>
+            <input type="text" name="fDate" placeholder="ex : Nov. 2024">
+          </div>
+          <div class="form-group">
+            <label>Chemin du fichier</label>
+            <input type="text" name="fPath" placeholder="ex : docs/fiches/Fiche_Python.pdf" required>
+          </div>
+        </div>
+        <p class="admin-error" id="docFormError"></p>
+        <button type="submit" class="btn-submit" id="docFormSubmitBtn">
+          <i class="ti ti-device-floppy"></i> Enregistrer
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- DOCUMENT MODAL -->
 <div class="modal-overlay" id="modalOverlay">
