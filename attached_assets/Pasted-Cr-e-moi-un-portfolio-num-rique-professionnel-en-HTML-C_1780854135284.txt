@@ -1,7 +1,7 @@
 Crée-moi un portfolio numérique professionnel en HTML, CSS et JavaScript 
 (fichiers séparés : index.html, style.css, app.js).
 
-Je suis Salma, professeure stagiaire en Informatique au CRMEF Rabat (2024–2025),
+Je suis Salma, professeure stagiaire en Informatique au CRMEF Rabat (2026),
 en stage au Lycée Hommane El Fetouaki à Rabat. Master 2 Cloud Computing en cours.
 
 === LOGIQUE FICHIERS (IMPORTANTE) ===
@@ -15,6 +15,7 @@ docs/fiches/     → fiches de préparation (PDF, DOCX)
 docs/grilles/    → grilles d'observation (JPG, PDF)
 docs/supports/   → supports de cours (PDF, PPTX)
 docs/pff/        → projet de fin de formation (PDF)
+docs/rapport_stage/        → projet de fin de formation (PDF)
 docs/productions/→ autres productions (PDF)
 
 Chaque document dans le code est déclaré comme un objet avec :
@@ -57,7 +58,7 @@ Le path est un chemin relatif vers le vrai fichier dans le projet.
 2. CV & PARCOURS
 - Barres de compétences animées (techniques + pédagogiques)
 - Points de langue (Arabe natif, Français B2, Anglais B1)
-- Timeline académique : Bac 2020 → BTS DSI 2022 → Licence 2023 → Master 2 → CRMEF 2025
+- Timeline académique : Bac STE 2021 → BTS DSI 2023 → Licence 2024 → Master 2 → CRMEF 2026
 - Infos stage en mini-grille
 
 3. RAPPORT DE STAGE
