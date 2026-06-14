@@ -3,7 +3,7 @@ import { Switch, Route, Router as WouterRouter, Link, useLocation } from "wouter
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Home, IdCard, FileText, Folder, Brain, Monitor, Sparkles, Mail,
-  MapPin, ChevronRight, PanelLeftClose, PanelLeftOpen, Menu, Lock, LockOpen
+  Menu, Lock, LockOpen, GraduationCap, MapPin
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
@@ -24,14 +24,14 @@ const queryClient = new QueryClient({
 });
 
 const NAV = [
-  { path: "/",           label: "Accueil",          icon: Home },
-  { path: "/cv",         label: "CV & Parcours",     icon: IdCard },
-  { path: "/rapport",    label: "Rapport de Stage",  icon: FileText },
-  { path: "/documents",  label: "Mes Documents",     icon: Folder,   badge: true },
-  { path: "/reflexion",  label: "Analyse Réflexive", icon: Brain },
-  { path: "/tice",       label: "Intégration TICE",  icon: Monitor },
-  { path: "/productions",label: "Productions",        icon: Sparkles },
-  { path: "/contact",    label: "Contact",            icon: Mail },
+  { path: "/",            label: "Accueil",          icon: Home },
+  { path: "/cv",          label: "CV & Parcours",     icon: IdCard },
+  { path: "/rapport",     label: "Rapport de Stage",  icon: FileText },
+  { path: "/documents",   label: "Mes Documents",     icon: Folder,   badge: true },
+  { path: "/reflexion",   label: "Analyse Réflexive", icon: Brain },
+  { path: "/tice",        label: "Intégration TICE",  icon: Monitor },
+  { path: "/productions", label: "Productions",        icon: Sparkles },
+  { path: "/contact",     label: "Contact",            icon: Mail },
 ];
 
 function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => void }) {
@@ -54,62 +54,62 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
     <>
       <aside
         className={cn(
-          "fixed top-0 left-0 bottom-0 flex flex-col z-50 transition-all duration-300",
-          "bg-[#0f0f1a] border-r border-[rgba(184,134,11,0.15)]",
-          collapsed ? "w-[70px]" : "w-[270px]"
+          "fixed top-0 left-0 bottom-0 flex flex-col z-50 bg-white border-r border-slate-200 transition-all duration-300 shadow-sm",
+          collapsed ? "w-[68px]" : "w-[260px]"
         )}
       >
         {/* Logo */}
-        <div className="px-5 py-6 border-b border-[rgba(184,134,11,0.15)] flex-shrink-0">
-          {collapsed ? (
-            <span className="text-gold text-xl font-serif block text-center">✦</span>
-          ) : (
-            <span className="text-gold font-serif text-[17px] font-semibold tracking-wide whitespace-nowrap">
-              ✦ Portfolio · Salma
-            </span>
+        <div className={cn(
+          "flex items-center gap-3 border-b border-slate-100 h-[65px] flex-shrink-0 px-4",
+          collapsed ? "justify-center" : ""
+        )}>
+          <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
+            <GraduationCap size={20} className="text-white" />
+          </div>
+          {!collapsed && (
+            <div>
+              <span className="text-slate-900 font-semibold text-sm leading-tight block">Portfolio</span>
+              <span className="text-blue-600 text-xs font-medium">Salma</span>
+            </div>
           )}
         </div>
 
         {/* Profile */}
         {!collapsed && (
-          <div className="px-5 py-6 border-b border-[rgba(184,134,11,0.15)] flex flex-col items-center gap-3 flex-shrink-0">
-            <div className="relative">
-              <div className="w-18 h-18 rounded-full bg-gradient-to-br from-[#b8860b] to-[#d4a017] flex items-center justify-center text-[#0f0f1a] font-serif text-3xl font-bold select-none"
-                style={{ width: 72, height: 72 }}>
-                S
-              </div>
-              <div className="absolute inset-[-3px] rounded-full border-2 border-[#b8860b] opacity-40 animate-pulse-ring pointer-events-none" />
+          <div className="px-4 py-5 border-b border-slate-100 flex flex-col items-center gap-3 flex-shrink-0 bg-slate-50/60">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-2xl font-serif select-none shadow-md">
+              S
             </div>
             <div className="text-center">
-              <h2 className="text-[#e8e4d8] font-serif text-lg font-semibold">Salma</h2>
-              <p className="text-[#8a8599] text-xs leading-relaxed mt-0.5">Professeure Stagiaire · Informatique</p>
-              <p className="text-gold text-xs flex items-center justify-center gap-1 mt-1">
-                <MapPin size={11} /> Rabat, Maroc
+              <h2 className="text-slate-900 font-semibold text-sm">Salma</h2>
+              <p className="text-slate-500 text-xs leading-relaxed mt-0.5">Prof. Stagiaire · Informatique</p>
+              <p className="text-blue-600 text-xs flex items-center justify-center gap-1 mt-1 font-medium">
+                <MapPin size={10} /> Rabat, Maroc
               </p>
             </div>
           </div>
         )}
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-4 overflow-y-auto flex flex-col gap-1">
+        <nav className="flex-1 px-2 py-3 overflow-y-auto flex flex-col gap-0.5">
           {NAV.map(({ path, label, icon: Icon, badge }) => {
             const isActive = path === "/" ? location === "/" : location.startsWith(path);
             return (
               <Link key={path} href={path}
                 className={cn(
-                  "flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150",
                   collapsed ? "justify-center" : "",
                   isActive
-                    ? "bg-[rgba(184,134,11,0.2)] text-gold border-l-2 border-gold"
-                    : "text-[#8a8599] hover:bg-[rgba(184,134,11,0.08)] hover:text-[#e8e4d8]"
+                    ? "bg-blue-50 text-blue-600 font-semibold"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                 )}
               >
-                <Icon size={18} className="flex-shrink-0" />
+                <Icon size={17} className={cn("flex-shrink-0", isActive ? "text-blue-600" : "text-slate-400")} />
                 {!collapsed && (
                   <>
                     <span className="flex-1">{label}</span>
                     {badge && docs.length > 0 && (
-                      <span className="bg-gold text-[#0f0f1a] text-[11px] font-bold px-1.5 py-0.5 rounded-full min-w-[22px] text-center">
+                      <span className="bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
                         {docs.length}
                       </span>
                     )}
@@ -120,37 +120,37 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
           })}
         </nav>
 
-        {/* Admin button */}
-        <div className="px-3 py-2 border-t border-[rgba(184,134,11,0.15)]">
+        {/* Admin */}
+        <div className="px-2 py-2 border-t border-slate-100">
           <button
             onClick={handleAdminClick}
             className={cn(
-              "w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+              "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150",
               collapsed ? "justify-center" : "",
               isAdmin
-                ? "text-gold bg-[rgba(184,134,11,0.12)]"
-                : "text-[#8a8599] hover:bg-[rgba(184,134,11,0.08)] hover:text-[#e8e4d8]"
+                ? "bg-blue-50 text-blue-600"
+                : "text-slate-500 hover:bg-slate-100 hover:text-slate-700"
             )}
           >
-            {isAdmin ? <LockOpen size={18} className="flex-shrink-0" /> : <Lock size={18} className="flex-shrink-0" />}
+            {isAdmin ? <LockOpen size={17} className="flex-shrink-0 text-blue-600" /> : <Lock size={17} className="flex-shrink-0 text-slate-400" />}
             {!collapsed && <span>{isAdmin ? "Admin connecté" : "Administration"}</span>}
           </button>
         </div>
 
         {/* Footer */}
         {!collapsed && (
-          <div className="px-5 py-4 border-t border-[rgba(184,134,11,0.15)] text-center flex-shrink-0">
-            <p className="text-[#8a8599] text-[11px] leading-relaxed">Lycée Hommane El Fetouaki</p>
-            <p className="text-[#8a8599] text-[11px]">CRMEF Rabat · 2024–2025</p>
+          <div className="px-4 py-3 border-t border-slate-100 text-center bg-slate-50/60 flex-shrink-0">
+            <p className="text-slate-400 text-[10px] leading-relaxed">Lycée Hommane El Fetouaki</p>
+            <p className="text-slate-400 text-[10px]">CRMEF Rabat · 2024–2025</p>
           </div>
         )}
 
-        {/* Toggle button */}
+        {/* Collapse toggle */}
         <button
           onClick={onToggle}
-          className="absolute -right-4 bottom-16 w-8 h-8 bg-[#0f0f1a] border border-[rgba(184,134,11,0.25)] rounded-full flex items-center justify-center text-[#8a8599] hover:text-gold transition-colors z-10"
+          className="absolute -right-3.5 top-20 w-7 h-7 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-300 transition-colors shadow-sm text-xs"
         >
-          {collapsed ? <PanelLeftOpen size={15} /> : <PanelLeftClose size={15} />}
+          {collapsed ? "›" : "‹"}
         </button>
       </aside>
 
@@ -164,11 +164,11 @@ function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-slate-50">
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -182,18 +182,18 @@ function Layout() {
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden md:block flex-shrink-0" style={{ width: sidebarCollapsed ? 70 : 270 }}>
+      <div className="hidden md:block flex-shrink-0" style={{ width: sidebarCollapsed ? 68 : 260 }}>
         <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(c => !c)} />
       </div>
 
       {/* Main content */}
-      <main className="flex-1 min-w-0">
+      <main className="flex-1 min-w-0 bg-slate-50">
         {/* Mobile burger */}
         <button
           onClick={() => setMobileOpen(true)}
-          className="md:hidden fixed top-4 left-4 z-30 w-11 h-11 bg-[#0f0f1a] border border-[rgba(184,134,11,0.25)] rounded-lg flex items-center justify-center text-gold"
+          className="md:hidden fixed top-4 left-4 z-30 w-10 h-10 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-slate-600 shadow-sm"
         >
-          <Menu size={20} />
+          <Menu size={18} />
         </button>
 
         <div className="animate-fade-in">

@@ -24,19 +24,19 @@ const JOURNAL = [
 ];
 
 const AUTOEVAL = [
-  { competence: "Maîtrise disciplinaire", stars: 4, level: "Bien", cls: "bg-green-50 text-green-700" },
-  { competence: "Planification pédagogique", stars: 4, level: "Bien", cls: "bg-green-50 text-green-700" },
-  { competence: "Gestion de classe", stars: 3, level: "Assez bien", cls: "bg-orange-50 text-orange-700" },
-  { competence: "Évaluation des apprentissages", stars: 4, level: "Bien", cls: "bg-green-50 text-green-700" },
-  { competence: "Intégration des TICE", stars: 5, level: "Excellent", cls: "bg-[#f5e6b8] text-[#b8860b]" },
-  { competence: "Communication professionnelle", stars: 4, level: "Bien", cls: "bg-green-50 text-green-700" },
+  { competence: "Maîtrise disciplinaire",      stars: 4, level: "Bien",      cls: "bg-green-50 text-green-700 border border-green-200" },
+  { competence: "Planification pédagogique",   stars: 4, level: "Bien",      cls: "bg-green-50 text-green-700 border border-green-200" },
+  { competence: "Gestion de classe",           stars: 3, level: "Assez bien",cls: "bg-orange-50 text-orange-700 border border-orange-200" },
+  { competence: "Évaluation des apprentissages",stars: 4, level: "Bien",     cls: "bg-green-50 text-green-700 border border-green-200" },
+  { competence: "Intégration des TICE",        stars: 5, level: "Excellent", cls: "bg-blue-50 text-blue-700 border border-blue-200" },
+  { competence: "Communication professionnelle",stars: 4, level: "Bien",     cls: "bg-green-50 text-green-700 border border-green-200" },
 ];
 
 function Stars({ n }: { n: number }) {
   return (
-    <div className="flex gap-0.5">
+    <div className="flex gap-0.5 justify-center">
       {Array.from({ length: 5 }, (_, i) => (
-        <Star key={i} size={14} className={i < n ? "text-gold fill-gold" : "text-border fill-border"} />
+        <Star key={i} size={14} className={i < n ? "text-blue-500 fill-blue-500" : "text-slate-200 fill-slate-200"} />
       ))}
     </div>
   );
@@ -44,34 +44,42 @@ function Stars({ n }: { n: number }) {
 
 export default function Reflexion() {
   return (
-    <div className="p-10 max-w-5xl mx-auto">
-      <div className="mb-9">
-        <h2 className="font-serif text-3xl font-bold mb-2">Analyse Réflexive</h2>
-        <p className="text-muted-foreground">Retour critique sur la pratique pédagogique</p>
+    <div className="p-8 max-w-5xl mx-auto">
+      <div className="mb-8">
+        <h2 className="font-serif text-3xl font-bold text-slate-900 mb-1">Analyse Réflexive</h2>
+        <p className="text-slate-500">Retour critique sur la pratique pédagogique</p>
       </div>
 
-      {/* Strengths & axes */}
-      <div className="grid grid-cols-2 gap-5 mb-8">
-        <div className="bg-white border border-green-200 border-t-4 border-t-green-600 rounded-xl p-7 shadow-sm">
-          <h3 className="flex items-center gap-2 font-semibold text-base mb-5">
-            <ThumbsUp size={16} className="text-green-600" /> Points Forts
-          </h3>
+      {/* Strengths & Axes */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+        <div className="bg-white border border-green-200 rounded-xl p-6 shadow-sm">
+          <div className="flex items-center gap-2 mb-5 pb-4 border-b border-green-100">
+            <div className="w-9 h-9 bg-green-50 rounded-lg flex items-center justify-center">
+              <ThumbsUp size={17} className="text-green-600" />
+            </div>
+            <h3 className="font-semibold text-slate-800">Points Forts</h3>
+          </div>
           <ul className="flex flex-col gap-2.5">
             {STRENGTHS.map(s => (
-              <li key={s} className="flex items-start gap-2 text-sm text-muted-foreground">
-                <span className="mt-0.5 text-green-600 flex-shrink-0">✓</span> {s}
+              <li key={s} className="flex items-start gap-2.5 text-sm text-slate-600">
+                <span className="mt-0.5 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xs font-bold flex-shrink-0">✓</span>
+                {s}
               </li>
             ))}
           </ul>
         </div>
-        <div className="bg-white border border-[rgba(184,134,11,0.3)] border-t-4 border-t-gold rounded-xl p-7 shadow-sm">
-          <h3 className="flex items-center gap-2 font-semibold text-base mb-5">
-            <TrendingUp size={16} className="text-gold" /> Axes d'Amélioration
-          </h3>
+        <div className="bg-white border border-blue-200 rounded-xl p-6 shadow-sm">
+          <div className="flex items-center gap-2 mb-5 pb-4 border-b border-blue-100">
+            <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center">
+              <TrendingUp size={17} className="text-blue-600" />
+            </div>
+            <h3 className="font-semibold text-slate-800">Axes d'Amélioration</h3>
+          </div>
           <ul className="flex flex-col gap-2.5">
             {AXES.map(a => (
-              <li key={a} className="flex items-start gap-2 text-sm text-muted-foreground">
-                <span className="mt-0.5 text-gold flex-shrink-0">→</span> {a}
+              <li key={a} className="flex items-start gap-2.5 text-sm text-slate-600">
+                <span className="mt-0.5 w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xs font-bold flex-shrink-0">→</span>
+                {a}
               </li>
             ))}
           </ul>
@@ -80,41 +88,47 @@ export default function Reflexion() {
 
       {/* Journal */}
       <div className="mb-8">
-        <h3 className="flex items-center gap-2 font-serif text-xl font-semibold mb-5">
-          <Notebook size={18} className="text-gold" /> Journal Réflexif
-        </h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex items-center gap-2 mb-5">
+          <div className="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center">
+            <Notebook size={16} className="text-indigo-600" />
+          </div>
+          <h3 className="font-serif text-xl font-semibold text-slate-800">Journal Réflexif</h3>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {JOURNAL.map(({ date, title, text }) => (
-            <div key={date} className="bg-white border border-border border-l-4 border-l-gold rounded-xl p-6 shadow-sm">
-              <div className="text-[10px] font-bold text-gold uppercase tracking-widest mb-2">{date}</div>
-              <h4 className="font-semibold text-sm mb-2">{title}</h4>
-              <p className="text-xs text-muted-foreground leading-relaxed">{text}</p>
+            <div key={date} className="bg-white border-l-4 border-l-blue-400 border border-slate-100 rounded-xl p-5 shadow-sm">
+              <div className="inline-block text-[10px] font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-1 rounded-md mb-3">{date}</div>
+              <h4 className="font-semibold text-slate-800 text-sm mb-2">{title}</h4>
+              <p className="text-xs text-slate-500 leading-relaxed">{text}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Autoévaluation table */}
+      {/* Autoévaluation */}
       <div>
-        <h3 className="flex items-center gap-2 font-serif text-xl font-semibold mb-5">
-          <Star size={18} className="text-gold" /> Autoévaluation CRMEF
-        </h3>
-        <div className="bg-white border border-border rounded-xl overflow-hidden shadow-sm">
+        <div className="flex items-center gap-2 mb-5">
+          <div className="w-8 h-8 bg-violet-50 rounded-lg flex items-center justify-center">
+            <Star size={16} className="text-violet-600" />
+          </div>
+          <h3 className="font-serif text-xl font-semibold text-slate-800">Autoévaluation CRMEF</h3>
+        </div>
+        <div className="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-sm">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-[#0f0f1a] text-[#e8e4d8]">
-                <th className="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-wider">Compétence</th>
-                <th className="px-5 py-3.5 text-xs font-semibold uppercase tracking-wider text-center">Niveau</th>
-                <th className="px-5 py-3.5 text-xs font-semibold uppercase tracking-wider text-center">Évaluation</th>
+              <tr className="bg-slate-800 text-white">
+                <th className="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-wide">Compétence</th>
+                <th className="px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-center">Notation</th>
+                <th className="px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-center">Niveau</th>
               </tr>
             </thead>
             <tbody>
               {AUTOEVAL.map(({ competence, stars, level, cls }) => (
-                <tr key={competence} className="border-b border-border last:border-0 hover:bg-muted/20 transition-colors">
-                  <td className="px-5 py-3.5 text-sm font-medium">{competence}</td>
+                <tr key={competence} className="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
+                  <td className="px-5 py-3.5 text-sm font-medium text-slate-700">{competence}</td>
                   <td className="px-5 py-3.5 text-center"><Stars n={stars} /></td>
                   <td className="px-5 py-3.5 text-center">
-                    <span className={`inline-block px-2.5 py-1 rounded-md text-xs font-semibold ${cls}`}>{level}</span>
+                    <span className={`inline-block px-2.5 py-1 rounded-lg text-xs font-semibold ${cls}`}>{level}</span>
                   </td>
                 </tr>
               ))}
