@@ -1,6 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "./useAuth";
 
+const API = "/api";
+
 export interface Doc {
   id: number;
   category: string;
@@ -10,6 +12,19 @@ export interface Doc {
   type: string;
   path: string;
   createdAt: string;
+}
+
+async function apiUpload(formData: FormData): Promise<Doc> {
+  const res = await fetch(`${API}/documents/upload`, {
+    method: "POST",
+    credentials: "include",
+    body: formData,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: "Erreur réseau" }));
+    throw new Error((err as { error?: string }).error ?? `HTTP ${res.status}`);
+  }
+  return res.json() as Promise<Doc>;
 }
 
 export function useDocuments() {
@@ -39,14 +54,21 @@ export function useDocuments() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["documents"] }),
   });
 
+  const uploadMut = useMutation({
+    mutationFn: apiUpload,
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["documents"] }),
+  });
+
   return {
     docs,
     isLoading,
     createDoc: createMut.mutateAsync,
     updateDoc: updateMut.mutateAsync,
     deleteDoc: deleteMut.mutateAsync,
+    uploadDoc: uploadMut.mutateAsync,
     createPending: createMut.isPending,
     updatePending: updateMut.isPending,
     deletePending: deleteMut.isPending,
+    uploadPending: uploadMut.isPending,
   };
 }

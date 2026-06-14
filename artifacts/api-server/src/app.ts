@@ -2,8 +2,10 @@ import express, { type Express } from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import session from "express-session";
+import path from "path";
 import router from "./routes";
 import { logger } from "./lib/logger";
+import { uploadsDir } from "./lib/upload";
 
 const app: Express = express();
 
@@ -48,6 +50,16 @@ app.use(
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
+  }),
+);
+
+app.use(
+  "/api/uploads",
+  express.static(uploadsDir, {
+    maxAge: "7d",
+    setHeaders(res) {
+      res.setHeader("Access-Control-Allow-Origin", "*");
     },
   }),
 );

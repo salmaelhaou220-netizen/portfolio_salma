@@ -1,6 +1,9 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
 import { eq, asc } from "drizzle-orm";
+import path from "path";
+import fs from "fs";
 import { db, documentsTable, insertDocumentSchema } from "@workspace/db";
+import { upload, uploadsDir } from "../lib/upload";
 
 const router: IRouter = Router();
 
@@ -18,6 +21,35 @@ router.get("/documents", async (req, res): Promise<void> => {
     .from(documentsTable)
     .orderBy(asc(documentsTable.category), asc(documentsTable.createdAt));
   res.json(docs);
+});
+
+router.post("/documents/upload", requireAdmin, upload.single("file"), async (req, res): Promise<void> => {
+  if (!req.file) {
+    res.status(400).json({ error: "Aucun fichier fourni" });
+    return;
+  }
+
+  const { category, name, description, date, type } = req.body as Record<string, string>;
+  const filePath = `/api/uploads/${req.file.filename}`;
+
+  const parsed = insertDocumentSchema.safeParse({
+    category,
+    name: name ?? req.file.originalname,
+    description: description ?? "",
+    date: date ?? new Date().toLocaleDateString("fr-FR", { month: "short", year: "numeric" }),
+    type: type ?? "pdf",
+    path: filePath,
+  });
+
+  if (!parsed.success) {
+    fs.unlinkSync(req.file.path);
+    res.status(400).json({ error: parsed.error.message });
+    return;
+  }
+
+  const [doc] = await db.insert(documentsTable).values(parsed.data).returning();
+  req.log.info({ id: doc.id, file: req.file.filename }, "Document uploaded");
+  res.status(201).json(doc);
 });
 
 router.post("/documents", requireAdmin, async (req, res): Promise<void> => {
@@ -76,6 +108,16 @@ router.delete("/documents/:id", requireAdmin, async (req, res): Promise<void> =>
   if (!doc) {
     res.status(404).json({ error: "Document introuvable" });
     return;
+  }
+
+  if (doc.path?.startsWith("/api/uploads/")) {
+    const filename = path.basename(doc.path);
+    const filePath = path.join(uploadsDir, filename);
+    try {
+      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    } catch {
+      /* ignore cleanup errors */
+    }
   }
 
   res.sendStatus(204);
