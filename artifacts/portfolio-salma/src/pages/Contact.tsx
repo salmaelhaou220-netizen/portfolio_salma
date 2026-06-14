@@ -5,7 +5,7 @@ const CONTACT_INFO = [
   { icon: Building2, label: "Établissement de stage", value: "Lycée Hommane El Fetouaki, Rabat", color: "text-blue-600", bg: "bg-blue-50" },
   { icon: School,    label: "Formation",               value: "CRMEF Rabat · Informatique · Secondaire Qualifiant", color: "text-indigo-600", bg: "bg-indigo-50" },
   { icon: Map,       label: "Académie",                value: "AREF Rabat-Salé-Kénitra", color: "text-violet-600", bg: "bg-violet-50" },
-  { icon: Calendar,  label: "Année scolaire",          value: "2024–2025", color: "text-sky-600", bg: "bg-sky-50" },
+  { icon: Calendar,  label: "Année scolaire",          value: "2025–2026", color: "text-sky-600", bg: "bg-sky-50" },
 ];
 
 const inputCls = "w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all bg-white";

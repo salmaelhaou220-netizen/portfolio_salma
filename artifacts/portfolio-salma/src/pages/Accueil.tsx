@@ -50,7 +50,7 @@ export default function Accueil() {
           <div className="flex flex-wrap gap-2.5 mb-6">
             {[
               { icon: GraduationCap, label: "CRMEF Rabat" },
-              { icon: Award, label: "Stagiaire 2024–2025" },
+              { icon: Award, label: "Stagiaire 2025–2026" },
               { icon: Cloud, label: "Master Cloud Computing" },
             ].map(({ icon: Icon, label }) => (
               <span key={label} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/90 bg-white/15 border border-white/20 backdrop-blur-sm">

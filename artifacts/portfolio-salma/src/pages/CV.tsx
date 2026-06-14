@@ -45,7 +45,7 @@ const LANGS = [
 ];
 
 const TIMELINE = [
-  { year: "2024–2025", title: "CRMEF Rabat", desc: "Formation initiale en Sciences de l'Éducation — Informatique Secondaire Qualifiant" },
+  { year: "2025–2026", title: "CRMEF Rabat", desc: "Formation initiale en Sciences de l'Éducation — Informatique Secondaire Qualifiant" },
   { year: "2023–En cours", title: "Master 2 — Génie Logiciel & Cloud Computing", desc: "Spécialisation en architectures cloud, conteneurisation et développement logiciel avancé" },
   { year: "2022–2023", title: "Licence en Informatique", desc: "Bases théoriques et pratiques en algorithmique, programmation et réseaux" },
   { year: "2020–2022", title: "BTS — Développement des Systèmes d'Information", desc: "Développement web, bases de données et gestion des systèmes d'information" },

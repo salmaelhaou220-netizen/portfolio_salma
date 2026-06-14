@@ -141,7 +141,7 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
         {!collapsed && (
           <div className="px-4 py-3 border-t border-slate-100 text-center bg-slate-50/60 flex-shrink-0">
             <p className="text-slate-400 text-[10px] leading-relaxed">Lycée Hommane El Fetouaki</p>
-            <p className="text-slate-400 text-[10px]">CRMEF Rabat · 2024–2025</p>
+            <p className="text-slate-400 text-[10px]">CRMEF Rabat · 2025–2026</p>
           </div>
         )}
 
