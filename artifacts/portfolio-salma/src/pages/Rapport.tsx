@@ -83,7 +83,7 @@ const CARDS = [
     bg: "bg-sky-50",
   },
 ];
--
+
 export default function Rapport() {
   return (
     <div className="p-8 max-w-5xl mx-auto">
@@ -176,7 +176,7 @@ export default function Rapport() {
               icon: Users,
               text: "Secondaire Qualifiant — Section Informatique",
             },
-            { icon: Calendar, text: "Année scolaire 2025–2026" },
+            { icon: Calendar, text: "Année scolaire 2024–2025" },
             { icon: School, text: "Encadrement CRMEF Rabat" },
           ].map(({ icon: Icon, text }) => (
             <div

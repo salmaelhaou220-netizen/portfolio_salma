@@ -93,7 +93,7 @@ function DocRow({ doc, isAdmin, onView, onEdit, onDeleteLocal, onDeleteApi, onPu
       <div className="flex gap-1.5 flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity">
         {isLocal ? (
           <>
-            <button onClick={() => openDoc(doc)}
+            <button onClick={() => onView(doc)}
               className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white border border-blue-200 transition-colors">
               <Eye size={11} /> Voir
             </button>
@@ -165,7 +165,7 @@ export default function Documents() {
     const cat = params.get("cat");
     return cat && Object.keys(CAT_META).includes(cat) ? { [cat]: true } : {};
   });
-  const [viewDoc, setViewDoc] = useState<Doc | null>(null);
+  const [viewDoc, setViewDoc] = useState<UnifiedDoc | null>(null);
   const [editDoc, setEditDoc] = useState<Doc | null>(null);
   const [formOpen, setFormOpen] = useState(false);
   const [formCat, setFormCat] = useState<string | undefined>();
@@ -346,7 +346,7 @@ export default function Documents() {
                             key={(doc as LocalDoc).isLocal ? (doc as LocalDoc).id : String((doc as Doc).id)}
                             doc={doc}
                             isAdmin={isAdmin}
-                            onView={d => setViewDoc(d as Doc)}
+                            onView={d => setViewDoc(d)}
                             onEdit={handleEdit}
                             onDeleteLocal={deleteLocalDoc}
                             onDeleteApi={handleDeleteApi}
