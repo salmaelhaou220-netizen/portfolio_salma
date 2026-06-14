@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearch } from "wouter";
 import { Search, ChevronDown, Eye, Download, Pencil, Trash2, Plus, Loader2, Folder, HardDrive, X, Cloud, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDocuments, type Doc } from "@/hooks/useDocuments";
@@ -152,9 +153,18 @@ export default function Documents() {
   const { localDocs, deleteLocalDoc } = useLocalDocs();
   const { isAdmin } = useAuth();
 
-  const [filter, setFilter] = useState("all");
+  const search_ = useSearch();
+  const [filter, setFilter] = useState(() => {
+    const params = new URLSearchParams(search_);
+    const cat = params.get("cat") ?? "all";
+    return Object.keys(CAT_META).includes(cat) ? cat : "all";
+  });
   const [search, setSearch] = useState("");
-  const [openCats, setOpenCats] = useState<Record<string, boolean>>({});
+  const [openCats, setOpenCats] = useState<Record<string, boolean>>(() => {
+    const params = new URLSearchParams(search_);
+    const cat = params.get("cat");
+    return cat && Object.keys(CAT_META).includes(cat) ? { [cat]: true } : {};
+  });
   const [viewDoc, setViewDoc] = useState<Doc | null>(null);
   const [editDoc, setEditDoc] = useState<Doc | null>(null);
   const [formOpen, setFormOpen] = useState(false);
