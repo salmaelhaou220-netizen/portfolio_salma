@@ -11,6 +11,7 @@ const CAT_META: Record<string, { label: string; icon: string; color: string; bg:
   fiches:      { label: "Fiches de Préparation",       icon: "📋", color: "text-blue-700",   bg: "bg-blue-50",   border: "border-blue-200" },
   grilles:     { label: "Grilles d'Observation",        icon: "📊", color: "text-green-700",  bg: "bg-green-50",  border: "border-green-200" },
   supports:    { label: "Supports de Cours",            icon: "📑", color: "text-indigo-700", bg: "bg-indigo-50", border: "border-indigo-200" },
+  rapport:     { label: "Rapport de Stage",             icon: "📝", color: "text-amber-700",  bg: "bg-amber-50",  border: "border-amber-200" },
   pff:         { label: "Projet de Fin de Formation",   icon: "📄", color: "text-violet-700", bg: "bg-violet-50", border: "border-violet-200" },
   productions: { label: "Autres Productions",           icon: "✨", color: "text-rose-700",   bg: "bg-rose-50",   border: "border-rose-200" },
 };
@@ -27,6 +28,7 @@ const FILTERS = [
   { key: "fiches",      label: "Fiches" },
   { key: "grilles",     label: "Grilles" },
   { key: "supports",    label: "Supports" },
+  { key: "rapport",     label: "Rapport de Stage" },
   { key: "pff",         label: "PFF" },
   { key: "productions", label: "Productions" },
 ];

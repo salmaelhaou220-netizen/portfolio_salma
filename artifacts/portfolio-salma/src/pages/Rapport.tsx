@@ -39,8 +39,8 @@ export default function Rapport() {
   return (
     <div className="p-8 max-w-5xl mx-auto">
       <div className="mb-8">
-        <h2 className="font-serif text-3xl font-bold text-slate-900 mb-1">Rapport de Stage</h2>
-        <p className="text-slate-500">Bilan de l'année de formation au Lycée Hommane El Fetouaki</p>
+        <h2 className="font-serif text-3xl font-bold text-slate-900 mb-1">Rapport de Stage — CRMEF Rabat</h2>
+        <p className="text-slate-500">Bilan de l'année de formation au Lycée Hommane El Fetouaki · 2024–2025</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
