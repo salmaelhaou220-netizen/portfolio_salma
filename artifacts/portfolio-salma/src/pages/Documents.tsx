@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Search, ChevronDown, Eye, Download, Pencil, Trash2, Plus, Loader2, Folder } from "lucide-react";
+import { Search, ChevronDown, Eye, Download, Pencil, Trash2, Plus, Loader2, Folder, HardDrive, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDocuments, type Doc } from "@/hooks/useDocuments";
+import { useLocalDocs, type LocalDoc, formatFileSize } from "@/hooks/useLocalDocs";
 import { useAuth } from "@/hooks/useAuth";
 import DocViewerModal from "@/components/DocViewerModal";
 import DocFormModal from "@/components/DocFormModal";
@@ -22,46 +23,116 @@ const TYPE_BADGE: Record<string, { label: string; cls: string }> = {
 };
 
 const FILTERS = [
-  { key: "all",        label: "Tous les documents" },
-  { key: "fiches",     label: "Fiches" },
-  { key: "grilles",    label: "Grilles" },
-  { key: "supports",   label: "Supports" },
-  { key: "pff",        label: "PFF" },
-  { key: "productions",label: "Productions" },
+  { key: "all",         label: "Tous" },
+  { key: "fiches",      label: "Fiches" },
+  { key: "grilles",     label: "Grilles" },
+  { key: "supports",    label: "Supports" },
+  { key: "pff",         label: "PFF" },
+  { key: "productions", label: "Productions" },
 ];
 
-function DocRow({ doc, isAdmin, onView, onEdit, onDelete }: {
-  doc: Doc; isAdmin: boolean;
-  onView: (d: Doc) => void; onEdit: (d: Doc) => void; onDelete: (d: Doc) => void;
+type UnifiedDoc = (Doc & { isLocal?: false }) | LocalDoc;
+
+function openOrDownload(doc: UnifiedDoc, mode: "view" | "download") {
+  const path = doc.path;
+  if (!path) return;
+  if (mode === "view") {
+    window.open(path, "_blank", "noopener");
+    return;
+  }
+  const a = document.createElement("a");
+  a.href = path;
+  a.download = (doc as LocalDoc).fileName ?? doc.name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+function DocRow({ doc, isAdmin, onView, onEdit, onDeleteLocal, onDeleteApi }: {
+  doc: UnifiedDoc;
+  isAdmin: boolean;
+  onView: (d: UnifiedDoc) => void;
+  onEdit: (d: Doc) => void;
+  onDeleteLocal: (id: string) => void;
+  onDeleteApi: (d: Doc) => void;
 }) {
   const badge = TYPE_BADGE[doc.type] ?? { label: doc.type.toUpperCase(), cls: "bg-slate-100 text-slate-600 border border-slate-200" };
+  const isLocal = (doc as LocalDoc).isLocal === true;
   return (
-    <li className="flex items-center gap-3 px-5 py-3.5 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors group">
+    <li className="flex items-center gap-3 px-5 py-3.5 border-b border-slate-100 last:border-0 hover:bg-slate-50/80 transition-colors group">
       <span className={cn("text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md flex-shrink-0", badge.cls)}>{badge.label}</span>
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-slate-800 truncate">{doc.name}</div>
-        {doc.description && <div className="text-xs text-slate-400 truncate mt-0.5">{doc.description}</div>}
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-sm font-medium text-slate-800 truncate">{doc.name}</span>
+          {isLocal && (
+            <span className="inline-flex items-center gap-1 text-[9px] font-bold text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full flex-shrink-0">
+              <HardDrive size={8} /> LOCAL
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-2 mt-0.5">
+          {doc.description && <span className="text-xs text-slate-400 truncate">{doc.description}</span>}
+          {isLocal && (doc as LocalDoc).fileSize > 0 && (
+            <span className="text-[10px] text-slate-400 flex-shrink-0">{formatFileSize((doc as LocalDoc).fileSize)}</span>
+          )}
+        </div>
       </div>
       <span className="text-xs text-slate-400 flex-shrink-0 hidden sm:block">{doc.date}</span>
-      <div className="flex gap-1.5 flex-shrink-0 opacity-80 group-hover:opacity-100 transition-opacity">
-        <button onClick={() => onView(doc)}
-          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white border border-blue-200 transition-colors">
-          <Eye size={11} /> Voir
-        </button>
-        <button onClick={() => { const a = document.createElement("a"); a.href = doc.path; a.download = doc.name; a.click(); }}
-          className="inline-flex items-center px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-green-50 text-green-700 hover:bg-green-600 hover:text-white border border-green-200 transition-colors">
-          <Download size={11} />
-        </button>
-        {isAdmin && (
+      <div className="flex gap-1.5 flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity">
+        {isLocal ? (
           <>
-            <button onClick={() => onEdit(doc)}
-              className="inline-flex items-center px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-50 text-slate-600 hover:bg-slate-600 hover:text-white border border-slate-200 transition-colors">
-              <Pencil size={11} />
+            <button
+              onClick={() => openOrDownload(doc, "view")}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white border border-blue-200 transition-colors"
+            >
+              <Eye size={11} /> Voir
             </button>
-            <button onClick={() => onDelete(doc)}
-              className="inline-flex items-center px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-200 transition-colors">
-              <Trash2 size={11} />
+            <button
+              onClick={() => openOrDownload(doc, "download")}
+              className="inline-flex items-center px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-green-50 text-green-700 hover:bg-green-600 hover:text-white border border-green-200 transition-colors"
+            >
+              <Download size={11} />
             </button>
+            <button
+              onClick={() => {
+                if (confirm(`Supprimer "${doc.name}" de votre stockage local ?`))
+                  onDeleteLocal((doc as LocalDoc).id);
+              }}
+              className="inline-flex items-center px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-200 transition-colors"
+            >
+              <X size={11} />
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => onView(doc)}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white border border-blue-200 transition-colors"
+            >
+              <Eye size={11} /> Voir
+            </button>
+            <button
+              onClick={() => openOrDownload(doc, "download")}
+              className="inline-flex items-center px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-green-50 text-green-700 hover:bg-green-600 hover:text-white border border-green-200 transition-colors"
+            >
+              <Download size={11} />
+            </button>
+            {isAdmin && (
+              <>
+                <button
+                  onClick={() => onEdit(doc as Doc)}
+                  className="inline-flex items-center px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-50 text-slate-600 hover:bg-slate-600 hover:text-white border border-slate-200 transition-colors"
+                >
+                  <Pencil size={11} />
+                </button>
+                <button
+                  onClick={() => onDeleteApi(doc as Doc)}
+                  className="inline-flex items-center px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-200 transition-colors"
+                >
+                  <Trash2 size={11} />
+                </button>
+              </>
+            )}
           </>
         )}
       </div>
@@ -71,7 +142,9 @@ function DocRow({ doc, isAdmin, onView, onEdit, onDelete }: {
 
 export default function Documents() {
   const { docs, isLoading, deleteDoc } = useDocuments();
+  const { localDocs, deleteLocalDoc } = useLocalDocs();
   const { isAdmin } = useAuth();
+
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [openCats, setOpenCats] = useState<Record<string, boolean>>({});
@@ -83,11 +156,17 @@ export default function Documents() {
   const toggleCat = (cat: string) => setOpenCats(prev => ({ ...prev, [cat]: !prev[cat] }));
   const catKeys = filter === "all" ? Object.keys(CAT_META) : [filter].filter(k => CAT_META[k]);
 
-  const filteredDocs = (cat: string) =>
-    docs.filter(d => d.category === cat && (search === "" || d.name.toLowerCase().includes(search.toLowerCase())));
+  const allDocs: UnifiedDoc[] = [...(localDocs as UnifiedDoc[]), ...(docs as UnifiedDoc[])];
+  const totalCount = allDocs.length;
 
-  const handleDelete = async (doc: Doc) => {
-    if (!confirm(`Supprimer "${doc.name}" ? Cette action est irréversible.`)) return;
+  const filteredDocs = (cat: string) =>
+    allDocs.filter(d =>
+      d.category === cat &&
+      (search === "" || d.name.toLowerCase().includes(search.toLowerCase()) || (d.description ?? "").toLowerCase().includes(search.toLowerCase()))
+    );
+
+  const handleDeleteApi = async (doc: Doc) => {
+    if (!confirm(`Supprimer "${doc.name}" du serveur ? Cette action est irréversible.`)) return;
     await deleteDoc(doc.id);
   };
 
@@ -96,9 +175,23 @@ export default function Documents() {
 
   return (
     <div className="p-8 max-w-5xl mx-auto">
-      <div className="mb-8">
-        <h2 className="font-serif text-3xl font-bold text-slate-900 mb-1">Mes Documents</h2>
-        <p className="text-slate-500">Ressources pédagogiques produites durant le stage</p>
+      {/* Header */}
+      <div className="flex items-start justify-between mb-8">
+        <div>
+          <h2 className="font-serif text-3xl font-bold text-slate-900 mb-1">Mes Documents</h2>
+          <p className="text-slate-500">
+            Ressources pédagogiques produites durant le stage
+            {localDocs.length > 0 && (
+              <span className="ml-2 text-blue-600 font-medium text-xs">
+                · {localDocs.length} document{localDocs.length > 1 ? "s" : ""} local{localDocs.length > 1 ? "aux" : ""}
+              </span>
+            )}
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-full">{totalCount}</span>
+          <span className="text-slate-500 text-sm">document{totalCount > 1 ? "s" : ""}</span>
+        </div>
       </div>
 
       {/* Toolbar */}
@@ -112,6 +205,11 @@ export default function Documents() {
             placeholder="Rechercher un document…"
             className="flex-1 text-sm outline-none bg-transparent placeholder:text-slate-400 text-slate-700"
           />
+          {search && (
+            <button onClick={() => setSearch("")} className="text-slate-400 hover:text-slate-600 flex-shrink-0">
+              <X size={13} />
+            </button>
+          )}
         </div>
         <div className="flex flex-wrap gap-2">
           {FILTERS.map(({ key, label }) => (
@@ -128,6 +226,16 @@ export default function Documents() {
         </div>
       </div>
 
+      {/* Add button (for any user — adds to local) */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => { setFormCat(undefined); setEditDoc(null); setFormOpen(true); }}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors shadow-sm"
+        >
+          <Plus size={14} /> Ajouter un document
+        </button>
+      </div>
+
       {isLoading ? (
         <div className="flex justify-center py-16">
           <Loader2 size={32} className="animate-spin text-blue-600" />
@@ -137,9 +245,11 @@ export default function Documents() {
           {catKeys.map(cat => {
             const meta = CAT_META[cat];
             const catDocs = filteredDocs(cat);
+            const localCount = catDocs.filter(d => (d as LocalDoc).isLocal).length;
             const isOpen = openCats[cat] ?? (filter !== "all" || search !== "");
+
             return (
-              <div key={cat} className={cn("bg-white border rounded-xl overflow-hidden shadow-sm", meta.border)}>
+              <div key={cat} className={cn("bg-white border rounded-xl overflow-hidden shadow-sm transition-shadow hover:shadow-md", meta.border)}>
                 <div
                   className="flex items-center gap-3.5 px-5 py-4 cursor-pointer hover:bg-slate-50 transition-colors select-none"
                   onClick={() => toggleCat(cat)}
@@ -147,7 +257,12 @@ export default function Documents() {
                   <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0", meta.bg)}>
                     {meta.icon}
                   </div>
-                  <span className={cn("flex-1 font-semibold text-sm text-slate-800")}>{meta.label}</span>
+                  <span className="flex-1 font-semibold text-sm text-slate-800">{meta.label}</span>
+                  {localCount > 0 && (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
+                      <HardDrive size={9} /> {localCount} local
+                    </span>
+                  )}
                   <span className="text-xs text-slate-400 font-medium">{catDocs.length} fichier{catDocs.length !== 1 ? "s" : ""}</span>
                   {isAdmin && (
                     <button
@@ -159,17 +274,32 @@ export default function Documents() {
                   )}
                   <ChevronDown size={16} className={cn("text-slate-400 transition-transform flex-shrink-0", isOpen && "rotate-180")} />
                 </div>
+
                 {isOpen && (
                   <div className="border-t border-slate-100">
                     {catDocs.length === 0 ? (
                       <div className="flex items-center gap-3 px-5 py-6 text-sm text-slate-400 italic">
-                        <Folder size={16} className="text-slate-300" /> Aucun document dans cette catégorie.
+                        <Folder size={16} className="text-slate-300" />
+                        Aucun document dans cette catégorie.
+                        <button
+                          onClick={() => { setFormCat(cat); setEditDoc(null); setFormOpen(true); }}
+                          className="text-blue-600 text-xs font-semibold not-italic hover:underline ml-auto"
+                        >
+                          + Ajouter
+                        </button>
                       </div>
                     ) : (
                       <ul>
                         {catDocs.map(doc => (
-                          <DocRow key={doc.id} doc={doc} isAdmin={isAdmin}
-                            onView={setViewDoc} onEdit={handleEdit} onDelete={handleDelete} />
+                          <DocRow
+                            key={(doc as LocalDoc).isLocal ? (doc as LocalDoc).id : (doc as Doc).id}
+                            doc={doc}
+                            isAdmin={isAdmin}
+                            onView={d => setViewDoc(d as Doc)}
+                            onEdit={handleEdit}
+                            onDeleteLocal={deleteLocalDoc}
+                            onDeleteApi={handleDeleteApi}
+                          />
                         ))}
                       </ul>
                     )}
@@ -183,7 +313,9 @@ export default function Documents() {
 
       <DocViewerModal doc={viewDoc} onClose={() => setViewDoc(null)} />
       <DocFormModal
-        open={formOpen} doc={editDoc} defaultCategory={formCat}
+        open={formOpen}
+        doc={editDoc}
+        defaultCategory={formCat}
         onClose={() => { setFormOpen(false); setEditDoc(null); setFormCat(undefined); }}
       />
     </div>
