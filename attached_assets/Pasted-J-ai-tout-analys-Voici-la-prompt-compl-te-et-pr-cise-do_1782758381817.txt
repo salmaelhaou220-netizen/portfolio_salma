@@ -1,0 +1,74 @@
+J'ai tout analysé. Voici la prompt complète et précise à donner à Replit Agent :
+
+---
+
+**📋 Prompt à copier-coller dans Replit :**
+
+---
+
+Redesign complet du portfolio en style pastel doux et cute mais professionnel. Voici toutes les modifications à apporter :
+
+**🎨 PALETTE DE COULEURS — remplace le bleu/indigo actuel par :**
+- Couleur principale : `#C084A0` (rose poudré)
+- Couleur secondaire : `#E8B4C8` (rose clair)
+- Accent chaud : `#F5E6EE` (rose très pâle, pour les fonds de cartes)
+- Fond page : `#FDF8FA` (blanc rosé)
+- Texte principal : `#3D2B35` (brun-prune foncé)
+- Sidebar fond : `#2D1B25` (prune foncé, élégant)
+- Sidebar texte : `#F5E6EE`
+- Sidebar item actif : fond `#C084A0`, texte blanc
+
+**🖼️ SIDEBAR — modifications :**
+- Changer le fond de la sidebar en `#2D1B25` (prune foncé) au lieu de blanc
+- L'avatar circulaire `S` : remplacer le gradient bleu/indigo par un gradient `from-[#C084A0] to-[#9B5B7A]`
+- Ajouter juste au-dessus de l'avatar un espace pour une **vraie photo** : un `<img>` circulaire avec `src="/photo-salma.jpg"` et un fallback sur l'avatar `S` si l'image n'existe pas encore. Utiliser : `onError={(e) => { e.currentTarget.style.display='none'; /* show fallback */ }}`
+- Le nom "Salma" en blanc, le sous-titre "Prof. Stagiaire · Informatique" en `#E8B4C8`
+- Les icônes de navigation : couleur `#C084A0` quand actif, `#B8A0AC` sinon
+- Footer sidebar : "Lycée Hommane El Fetouaki" et "CRMEF Rabat · 2025–2026" en `#9B7A8A`
+
+**🌸 PAGE D'ACCUEIL (Accueil.tsx) — refonte complète de la hero section :**
+
+Remplace la hero card bleue actuelle par une mise en page en **deux colonnes** :
+- **Colonne gauche (60%)** : texte de présentation
+- **Colonne droite (40%)** : photo de profil
+
+La nouvelle hero doit avoir :
+- Fond : `linear-gradient(135deg, #F5E6EE 0%, #EDD5E5 50%, #F0D6E8 100%)` — dégradé rose pastel subtil
+- Bordure très fine `border border-[#E8B4C8]` avec `rounded-3xl`
+- Ombre douce `shadow-[0_8px_40px_rgba(192,132,160,0.15)]`
+- À gauche : les badges actuels (CRMEF, Stagiaire, Master), puis le `h1 "Salma"` en `text-[#2D1B25]` font-serif taille 5xl, le sous-titre "Professeure Stagiaire en Informatique" en `text-[#C084A0]`, la ligne lycée en `text-[#9B7A8A]`, et le bouton CTA avec fond `#C084A0` hover `#9B5B7A`
+- À droite : un cercle de 200px × 200px avec une belle bordure double : `ring-4 ring-[#E8B4C8] ring-offset-4 ring-offset-[#F5E6EE]`, contenant soit `<img src="/photo-salma.jpg" className="w-full h-full object-cover rounded-full" />` soit le fallback initial `S` avec gradient rose. Ajouter en dessous du cercle une petite ligne `✨ Bienvenue sur mon portfolio` en `text-[#C084A0] text-xs text-center`
+- Ajouter des petits éléments décoratifs absolus (cercles/blobs semi-transparents rose clair) dans les coins de la hero pour un effet "cute"
+
+**📊 CARTES DE STATISTIQUES (les 4 chiffres) :**
+- Fond : blanc avec `border border-[#F0D0E0]`
+- Icônes : teintes rosées (`#C084A0`, `#D4A0B8`, etc.) — plus de bleu/indigo/violet/sky
+- Chiffres : couleur `#C084A0`
+- Hover : `hover:border-[#C084A0] hover:shadow-[0_4px_20px_rgba(192,132,160,0.2)]`
+
+**💬 BLOC CITATION :**
+- Bordure gauche : `border-[#C084A0]`
+- Icône guillemet : `text-[#F0D0E0]`
+- Citation en italic `text-[#3D2B35]`
+- Auteur en `text-[#C084A0]`
+
+**📝 CARTES PROFIL/MISSION/APPROCHE/AMBITION :**
+- Fond blanc, bordure `border-[#F0D0E0]`
+- Icônes dans carré arrondi : fond `#F5E6EE`, icône `#C084A0`
+- Hover : `hover:border-[#C084A0]`
+
+**🔤 TYPOGRAPHIE :**
+- Ajouter dans `index.html` ou via Google Fonts import : `Playfair Display` pour les titres (h1, h2, font-serif), `Inter` pour le corps
+- Toutes les classes `font-serif` doivent utiliser Playfair Display
+
+**📁 FICHIER À CRÉER :**
+Créer un fichier `public/photo-salma.jpg` vide (placeholder) pour que l'import de l'image soit prêt. Je remplacerai ce fichier plus tard avec ma vraie photo.
+
+**⚙️ GLOBAL :**
+- Ne toucher à aucune logique existante (navigation, documents, admin, etc.)
+- Ne modifier que les couleurs, styles, layout de la hero et l'ajout de la photo
+- Garder toutes les pages autres qu'Accueil fonctionnelles, juste mettre à jour leur palette de couleurs (remplacer `blue-600` → `[#C084A0]`, `indigo-*` → teintes rosées équivalentes)
+
+---
+
+Copie tout ça dans Replit Agent et dis-lui **"Apply all these changes"**. Ensuite pour ta photo, il suffira de glisser ton fichier image dans le dossier `public/` du projet et le renommer `photo-salma.jpg` — elle apparaîtra automatiquement ! 🌸

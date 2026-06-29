@@ -39,6 +39,7 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
   const { isAdmin, logout } = useAuth();
   const { docs } = useDocuments();
   const [showLogin, setShowLogin] = useState(false);
+  const [photoError, setPhotoError] = useState(false);
 
   const handleAdminClick = async () => {
     if (isAdmin) {
@@ -54,36 +55,49 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
     <>
       <aside
         className={cn(
-          "fixed top-0 left-0 bottom-0 flex flex-col z-50 bg-white border-r border-slate-200 transition-all duration-300 shadow-sm",
+          "fixed top-0 left-0 bottom-0 flex flex-col z-50 transition-all duration-300 shadow-xl",
           collapsed ? "w-[68px]" : "w-[260px]"
         )}
+        style={{ background: "#2D1B25" }}
       >
         {/* Logo */}
         <div className={cn(
-          "flex items-center gap-3 border-b border-slate-100 h-[65px] flex-shrink-0 px-4",
+          "flex items-center gap-3 border-b h-[65px] flex-shrink-0 px-4",
           collapsed ? "justify-center" : ""
-        )}>
-          <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
+        )} style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "#C084A0" }}>
             <GraduationCap size={20} className="text-white" />
           </div>
           {!collapsed && (
             <div>
-              <span className="text-slate-900 font-semibold text-sm leading-tight block">Portfolio</span>
-              <span className="text-blue-600 text-xs font-medium">Salma</span>
+              <span className="text-white font-semibold text-sm leading-tight block">Portfolio</span>
+              <span className="text-[#C084A0] text-xs font-medium">Salma</span>
             </div>
           )}
         </div>
 
         {/* Profile */}
         {!collapsed && (
-          <div className="px-4 py-5 border-b border-slate-100 flex flex-col items-center gap-3 flex-shrink-0 bg-slate-50/60">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-2xl font-serif select-none shadow-md">
-              S
-            </div>
+          <div className="px-4 py-5 border-b flex flex-col items-center gap-3 flex-shrink-0"
+            style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+            {photoError ? (
+              <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl font-serif select-none shadow-md"
+                style={{ background: "linear-gradient(135deg,#C084A0,#9B5B7A)", outline: "2px solid #E8B4C8", outlineOffset: "2px" }}>
+                S
+              </div>
+            ) : (
+              <img
+                src="/photo-salma.jpg"
+                alt="Salma"
+                className="w-16 h-16 rounded-full object-cover shadow-md"
+                style={{ outline: "2px solid #E8B4C8", outlineOffset: "2px" }}
+                onError={() => setPhotoError(true)}
+              />
+            )}
             <div className="text-center">
-              <h2 className="text-slate-900 font-semibold text-sm">Salma</h2>
-              <p className="text-slate-500 text-xs leading-relaxed mt-0.5">Prof. Stagiaire · Informatique</p>
-              <p className="text-blue-600 text-xs flex items-center justify-center gap-1 mt-1 font-medium">
+              <h2 className="font-semibold text-sm text-white">Salma</h2>
+              <p className="text-xs leading-relaxed mt-0.5" style={{ color: "#E8B4C8" }}>Prof. Stagiaire · Informatique</p>
+              <p className="text-xs flex items-center justify-center gap-1 mt-1 font-medium" style={{ color: "#C084A0" }}>
                 <MapPin size={10} /> Rabat, Maroc
               </p>
             </div>
@@ -99,17 +113,20 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150",
                   collapsed ? "justify-center" : "",
-                  isActive
-                    ? "bg-blue-50 text-blue-600 font-semibold"
-                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                 )}
+                style={{
+                  background: isActive ? "rgba(192,132,160,0.18)" : "transparent",
+                  color: isActive ? "#C084A0" : "#B8A0AC",
+                }}
+                onMouseEnter={e => { if (!isActive) { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLElement).style.color = "#F5E6EE"; } }}
+                onMouseLeave={e => { if (!isActive) { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "#B8A0AC"; } }}
               >
-                <Icon size={17} className={cn("flex-shrink-0", isActive ? "text-blue-600" : "text-slate-400")} />
+                <Icon size={17} className="flex-shrink-0" style={{ color: isActive ? "#C084A0" : "#B8A0AC" }} />
                 {!collapsed && (
                   <>
                     <span className="flex-1">{label}</span>
                     {badge && docs.length > 0 && (
-                      <span className="bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
+                      <span className="text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center" style={{ background: "#C084A0" }}>
                         {docs.length}
                       </span>
                     )}
@@ -121,34 +138,38 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
         </nav>
 
         {/* Admin */}
-        <div className="px-2 py-2 border-t border-slate-100">
+        <div className="px-2 py-2 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
           <button
             onClick={handleAdminClick}
             className={cn(
               "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150",
               collapsed ? "justify-center" : "",
-              isAdmin
-                ? "bg-blue-50 text-blue-600"
-                : "text-slate-500 hover:bg-slate-100 hover:text-slate-700"
             )}
+            style={{
+              background: isAdmin ? "rgba(192,132,160,0.18)" : "transparent",
+              color: isAdmin ? "#C084A0" : "#B8A0AC",
+            }}
           >
-            {isAdmin ? <LockOpen size={17} className="flex-shrink-0 text-blue-600" /> : <Lock size={17} className="flex-shrink-0 text-slate-400" />}
+            {isAdmin
+              ? <LockOpen size={17} className="flex-shrink-0" style={{ color: "#C084A0" }} />
+              : <Lock size={17} className="flex-shrink-0" style={{ color: "#B8A0AC" }} />}
             {!collapsed && <span>{isAdmin ? "Admin connecté" : "Administration"}</span>}
           </button>
         </div>
 
         {/* Footer */}
         {!collapsed && (
-          <div className="px-4 py-3 border-t border-slate-100 text-center bg-slate-50/60 flex-shrink-0">
-            <p className="text-slate-400 text-[10px] leading-relaxed">Lycée Hommane El Fetouaki</p>
-            <p className="text-slate-400 text-[10px]">CRMEF Rabat · 2025–2026</p>
+          <div className="px-4 py-3 border-t text-center flex-shrink-0" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+            <p className="text-[10px] leading-relaxed" style={{ color: "#9B7A8A" }}>Lycée Hommane El Fetouaki</p>
+            <p className="text-[10px]" style={{ color: "#9B7A8A" }}>CRMEF Rabat · 2025–2026</p>
           </div>
         )}
 
         {/* Collapse toggle */}
         <button
           onClick={onToggle}
-          className="absolute -right-3.5 top-20 w-7 h-7 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-300 transition-colors shadow-sm text-xs"
+          className="absolute -right-3.5 top-20 w-7 h-7 rounded-full flex items-center justify-center text-xs shadow-md transition-colors"
+          style={{ background: "#2D1B25", border: "1px solid rgba(192,132,160,0.35)", color: "#C084A0" }}
         >
           {collapsed ? "›" : "‹"}
         </button>
@@ -164,7 +185,7 @@ function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen" style={{ background: "#FDF8FA" }}>
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
@@ -187,11 +208,12 @@ function Layout() {
       </div>
 
       {/* Main content */}
-      <main className="flex-1 min-w-0 bg-slate-50">
+      <main className="flex-1 min-w-0" style={{ background: "#FDF8FA" }}>
         {/* Mobile burger */}
         <button
           onClick={() => setMobileOpen(true)}
-          className="md:hidden fixed top-4 left-4 z-30 w-10 h-10 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-slate-600 shadow-sm"
+          className="md:hidden fixed top-4 left-4 z-30 w-10 h-10 bg-white border border-slate-200 rounded-lg flex items-center justify-center shadow-sm"
+          style={{ color: "#3D2B35" }}
         >
           <Menu size={18} />
         </button>
