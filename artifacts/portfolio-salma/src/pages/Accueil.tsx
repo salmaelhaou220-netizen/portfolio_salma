@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
-import { GraduationCap, Award, Cloud, Monitor, FolderOpen, Quote, BookOpen, Target, Lightbulb, Rocket } from "lucide-react";
+import { GraduationCap, Award, Cloud, Monitor, FolderOpen, Quote, BookOpen, Target, Lightbulb, Rocket, Camera } from "lucide-react";
 import { useDocuments } from "@/hooks/useDocuments";
+import { useAuth } from "@/hooks/useAuth";
 
 function KpiCard({ icon: Icon, value, label, isText }: {
   icon: React.ElementType; value: number | string; label: string; isText?: boolean;
@@ -40,7 +41,22 @@ function KpiCard({ icon: Icon, value, label, isText }: {
 
 export default function Accueil() {
   const { docs } = useDocuments();
+  const { isAdmin } = useAuth();
   const [photoError, setPhotoError] = useState(false);
+  const [photoKey, setPhotoKey] = useState(0);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append("photo", file);
+    try {
+      const res = await fetch("/api/photo", { method: "POST", credentials: "include", body: fd });
+      if (res.ok) { setPhotoError(false); setPhotoKey(k => k + 1); }
+    } catch { }
+    e.target.value = "";
+  };
 
   return (
     <div className="p-8 max-w-5xl mx-auto">
@@ -93,25 +109,41 @@ export default function Accueil() {
 
           {/* Colonne droite — 40% — photo */}
           <div className="hidden md:flex flex-col items-center gap-3 flex-shrink-0">
-            {photoError ? (
-              <div className="w-48 h-48 rounded-full flex items-center justify-center text-white font-bold text-7xl font-serif select-none"
-                style={{
-                  background: "linear-gradient(135deg,#C084A0,#9B5B7A)",
-                  outline: "4px solid #E8B4C8",
-                  outlineOffset: "4px",
-                }}
-              >
-                S
-              </div>
-            ) : (
-              <img
-                src="/photo-salma.jpg"
-                alt="EL HAOU SALMA"
-                className="w-48 h-48 rounded-full object-cover"
-                style={{ outline: "4px solid #E8B4C8", outlineOffset: "4px" }}
-                onError={() => setPhotoError(true)}
+            <div className="relative group">
+              {photoError ? (
+                <div className="w-48 h-48 rounded-full flex items-center justify-center text-white font-bold text-7xl font-serif select-none"
+                  style={{ background: "linear-gradient(135deg,#C084A0,#9B5B7A)", outline: "4px solid #E8B4C8", outlineOffset: "4px" }}>
+                  S
+                </div>
+              ) : (
+                <img
+                  key={photoKey}
+                  src={`/photo-salma.jpg?v=${photoKey}`}
+                  alt="EL HAOU SALMA"
+                  className="w-48 h-48 rounded-full object-cover"
+                  style={{ outline: "4px solid #E8B4C8", outlineOffset: "4px" }}
+                  onError={() => setPhotoError(true)}
+                />
+              )}
+              {isAdmin && (
+                <button
+                  onClick={() => photoInputRef.current?.click()}
+                  title="Changer la photo"
+                  className="absolute inset-0 rounded-full flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{ background: "rgba(45,27,37,0.6)" }}
+                >
+                  <Camera size={28} className="text-white" />
+                  <span className="text-white text-[10px] font-semibold">Changer</span>
+                </button>
+              )}
+              <input
+                ref={photoInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handlePhotoUpload}
               />
-            )}
+            </div>
             <p className="text-xs text-center font-medium" style={{ color: "#C084A0" }}>✨ Bienvenue sur mon portfolio</p>
           </div>
         </div>
