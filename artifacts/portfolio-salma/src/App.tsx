@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Switch, Route, Router as WouterRouter, Link, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Home, IdCard, FileText, Folder, Brain, Monitor, Sparkles, Mail,
-  Menu, Lock, LockOpen, GraduationCap, MapPin
+  Menu, Lock, LockOpen, GraduationCap, MapPin, Camera
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
@@ -40,6 +40,24 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
   const { docs } = useDocuments();
   const [showLogin, setShowLogin] = useState(false);
   const [photoError, setPhotoError] = useState(false);
+  const [photoKey, setPhotoKey] = useState(0);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append("photo", file);
+    try {
+      const res = await fetch("/api/photo", { method: "POST", credentials: "include", body: fd });
+      if (res.ok) {
+        setPhotoError(false);
+        setPhotoKey(k => k + 1);
+      }
+    } catch {
+    }
+    e.target.value = "";
+  };
 
   const handleAdminClick = async () => {
     if (isAdmin) {
@@ -80,20 +98,40 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
         {!collapsed && (
           <div className="px-4 py-5 border-b flex flex-col items-center gap-3 flex-shrink-0"
             style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-            {photoError ? (
-              <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl font-serif select-none shadow-md"
-                style={{ background: "linear-gradient(135deg,#C084A0,#9B5B7A)", outline: "2px solid #E8B4C8", outlineOffset: "2px" }}>
-                S
-              </div>
-            ) : (
-              <img
-                src="/photo-salma.jpg"
-                alt="EL HAOU SALMA"
-                className="w-16 h-16 rounded-full object-cover shadow-md"
-                style={{ outline: "2px solid #E8B4C8", outlineOffset: "2px" }}
-                onError={() => setPhotoError(true)}
+            <div className="relative group">
+              {photoError ? (
+                <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl font-serif select-none shadow-md"
+                  style={{ background: "linear-gradient(135deg,#C084A0,#9B5B7A)", outline: "2px solid #E8B4C8", outlineOffset: "2px" }}>
+                  S
+                </div>
+              ) : (
+                <img
+                  key={photoKey}
+                  src={`/photo-salma.jpg?v=${photoKey}`}
+                  alt="EL HAOU SALMA"
+                  className="w-16 h-16 rounded-full object-cover shadow-md"
+                  style={{ outline: "2px solid #E8B4C8", outlineOffset: "2px" }}
+                  onError={() => setPhotoError(true)}
+                />
+              )}
+              {isAdmin && (
+                <button
+                  onClick={() => photoInputRef.current?.click()}
+                  title="Changer la photo"
+                  className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{ background: "rgba(45,27,37,0.65)" }}
+                >
+                  <Camera size={18} className="text-white" />
+                </button>
+              )}
+              <input
+                ref={photoInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handlePhotoUpload}
               />
-            )}
+            </div>
             <div className="text-center">
               <h2 className="font-semibold text-sm text-white">EL HAOU SALMA</h2>
               <p className="text-xs leading-relaxed mt-0.5" style={{ color: "#E8B4C8" }}>Prof. Stagiaire · Informatique</p>
