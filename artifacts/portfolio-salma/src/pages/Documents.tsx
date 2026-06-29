@@ -272,14 +272,16 @@ export default function Documents() {
       </div>
 
       {/* Add button */}
-      <div className="flex justify-end mb-5">
-        <button
-          onClick={() => { setFormCat(undefined); setEditDoc(null); setFormOpen(true); }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors shadow-sm"
-        >
-          <Plus size={14} /> Ajouter un document
-        </button>
-      </div>
+      {isAdmin && (
+        <div className="flex justify-end mb-5">
+          <button
+            onClick={() => { setFormCat(undefined); setEditDoc(null); setFormOpen(true); }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors shadow-sm"
+          >
+            <Plus size={14} /> Ajouter un document
+          </button>
+        </div>
+      )}
 
       {isLoading ? (
         <div className="flex justify-center py-16"><Loader2 size={32} className="animate-spin text-blue-600" /></div>
