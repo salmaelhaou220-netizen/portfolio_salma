@@ -71,7 +71,7 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
           {!collapsed && (
             <div>
               <span className="text-white font-semibold text-sm leading-tight block">Portfolio</span>
-              <span className="text-[#C084A0] text-xs font-medium">Salma</span>
+              <span className="text-[#C084A0] text-xs font-medium">EL HAOU SALMA</span>
             </div>
           )}
         </div>
@@ -88,14 +88,14 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
             ) : (
               <img
                 src="/photo-salma.jpg"
-                alt="Salma"
+                alt="EL HAOU SALMA"
                 className="w-16 h-16 rounded-full object-cover shadow-md"
                 style={{ outline: "2px solid #E8B4C8", outlineOffset: "2px" }}
                 onError={() => setPhotoError(true)}
               />
             )}
             <div className="text-center">
-              <h2 className="font-semibold text-sm text-white">Salma</h2>
+              <h2 className="font-semibold text-sm text-white">EL HAOU SALMA</h2>
               <p className="text-xs leading-relaxed mt-0.5" style={{ color: "#E8B4C8" }}>Prof. Stagiaire · Informatique</p>
               <p className="text-xs flex items-center justify-center gap-1 mt-1 font-medium" style={{ color: "#C084A0" }}>
                 <MapPin size={10} /> Rabat, Maroc

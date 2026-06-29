@@ -76,8 +76,8 @@ export default function Accueil() {
               ))}
             </div>
 
-            <h1 className="font-serif text-5xl font-bold leading-tight mb-2" style={{ color: "#2D1B25" }}>Salma</h1>
-            <p className="text-xl font-medium mb-3" style={{ color: "#C084A0" }}>Professeure Stagiaire en Informatique</p>
+            <h1 className="font-serif text-5xl font-bold leading-tight mb-2" style={{ color: "#2D1B25" }}>EL HAOU SALMA</h1>
+            <p className="text-xl font-medium mb-3" style={{ color: "#C084A0" }}>Enseignante Stagiaire en Informatique</p>
             <p className="text-sm leading-relaxed mb-8" style={{ color: "#9B7A8A" }}>
               Lycée Hommane El Fetouaki · Secondaire Qualifiant · Académie Rabat-Salé-Kénitra
             </p>
@@ -106,7 +106,7 @@ export default function Accueil() {
             ) : (
               <img
                 src="/photo-salma.jpg"
-                alt="Salma"
+                alt="EL HAOU SALMA"
                 className="w-48 h-48 rounded-full object-cover"
                 style={{ outline: "4px solid #E8B4C8", outlineOffset: "4px" }}
                 onError={() => setPhotoError(true)}
