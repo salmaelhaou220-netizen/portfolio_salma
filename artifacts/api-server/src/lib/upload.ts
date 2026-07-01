@@ -22,15 +22,6 @@ const storage = multer.diskStorage({
 
 const ALLOWED_MIME = new Set([
   "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "application/vnd.ms-powerpoint",
-  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-  "image/jpeg",
-  "image/png",
-  "image/gif",
-  "image/webp",
-  "image/svg+xml",
 ]);
 
 const fileFilter = (_req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {

@@ -28,7 +28,8 @@ const TYPES = [
   { value: "img", label: "Image (JPG, PNG)" },
 ];
 
-const ACCEPT = ".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.gif,.webp,.svg";
+const ACCEPT = ".pdf";
+const ALLOWED_MIME = new Set(["application/pdf"]);
 
 type UploadMode = "local" | "server" | "url";
 
@@ -91,6 +92,10 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
   const pending = createPending || updatePending || isProcessing;
 
   const handleFileSelect = (file: File) => {
+    if (!ALLOWED_MIME.has(file.type) && !file.name.toLowerCase().endsWith(".pdf")) {
+      setError("Seuls les fichiers PDF sont acceptés.");
+      return;
+    }
     if (uploadMode === "local" && file.size > MAX_FILE_BYTES) {
       setError(`Fichier trop volumineux pour le stockage local (max 5 Mo). Taille : ${formatFileSize(file.size)}`);
       return;
@@ -101,7 +106,7 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
     setForm(f => ({
       ...f,
       name: f.name || file.name.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " "),
-      type: guessDocType(file),
+      type: "pdf",
       date: f.date || today,
     }));
   };
@@ -305,7 +310,7 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
                       ou <span className={cn("font-semibold", uploadMode === "server" ? "text-indigo-600" : "text-blue-600")}>cliquez pour parcourir</span>
                     </p>
                     <p className="text-[10px] text-slate-400 mt-2">
-                      PDF, DOC, PPT, JPG · {uploadMode === "server" ? "Illimité (Cloud)" : "Max 5 Mo"}
+                      PDF uniquement · {uploadMode === "server" ? "Illimité (Cloud)" : "Max 5 Mo"}
                     </p>
                   </div>
                 </div>
@@ -322,19 +327,27 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
           )}
 
           {/* Category & Type */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className={showFileDrop ? "flex flex-col gap-1.5" : "grid grid-cols-2 gap-3"}>
             <div className="flex flex-col gap-1.5">
               <label className={labelCls}>Catégorie</label>
               <select value={form.category} onChange={set("category")} className={inputCls}>
                 {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>
             </div>
-            <div className="flex flex-col gap-1.5">
-              <label className={labelCls}>Type</label>
-              <select value={form.type} onChange={set("type")} className={inputCls}>
-                {TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
-              </select>
-            </div>
+            {!showFileDrop && (
+              <div className="flex flex-col gap-1.5">
+                <label className={labelCls}>Type</label>
+                <select value={form.type} onChange={set("type")} className={inputCls}>
+                  {TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+                </select>
+              </div>
+            )}
+            {showFileDrop && (
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold"
+                style={{ background: "rgba(239,68,68,0.07)", color: "#b91c1c", border: "1px solid rgba(239,68,68,0.2)" }}>
+                <span className="text-base">📄</span> Format PDF · Type automatiquement détecté
+              </div>
+            )}
           </div>
 
           {/* Name */}
