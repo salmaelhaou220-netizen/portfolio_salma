@@ -1,112 +1,303 @@
-import { Link } from "wouter";
-import {
-  ClipboardList, Eye, Presentation, FileText,
-  Building, MapPin, Users, Calendar, School, ArrowRight,
-} from "lucide-react";
 import { useEffect, useRef } from "react";
+import {
+  MapPin, Eye, BookOpen, AlertTriangle, Lightbulb, Award,
+  Users, Calendar, School, Building, ClipboardList, MonitorSmartphone,
+  RotateCcw, BarChart2, Handshake,
+} from "lucide-react";
 
-function StatCard({ icon: Icon, value, label, color, bg }: {
-  icon: React.ElementType; value: number; label: string; color: string; bg: string;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
+const STEPS = [
+  {
+    num: "01", icon: MapPin, title: "Contexte & Établissement", time: "~1 min",
+    bg: "from-[#F5E6EE] to-white", accent: "#C084A0",
+  },
+  {
+    num: "02", icon: Eye, title: "Phase d'observation & Prise en main", time: "~1 min",
+    bg: "from-[#F5E6EE] to-white", accent: "#C084A0",
+  },
+  {
+    num: "03", icon: BookOpen, title: "Mes Séances d'Enseignement", time: "~2 min",
+    bg: "from-[#F5E6EE] to-white", accent: "#C084A0",
+  },
+  {
+    num: "04", icon: AlertTriangle, title: "Défis & Difficultés", time: "~1 min",
+    bg: "from-[#FFF4E6] to-white", accent: "#D97706",
+  },
+  {
+    num: "05", icon: Lightbulb, title: "Apprentissages & Réflexion", time: "~1 min",
+    bg: "from-[#EDFDF4] to-white", accent: "#059669",
+  },
+  {
+    num: "06", icon: Award, title: "Compétences Développées", time: "~1 min",
+    bg: "from-[#F5E6EE] to-white", accent: "#C084A0",
+  },
+];
+
+function useReveal() {
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    let cur = 0;
-    const iv = setInterval(() => {
-      cur = Math.min(cur + 1, value);
-      el.textContent = String(cur);
-      if (cur >= value) clearInterval(iv);
-    }, 80);
-    return () => clearInterval(iv);
-  }, [value]);
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; obs.disconnect(); } },
+      { threshold: 0.1 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return ref;
+}
+
+function TimelineCard({
+  num, icon: Icon, title, time, bg, accent, delay, children,
+}: {
+  num: string; icon: React.ElementType; title: string; time: string;
+  bg: string; accent: string; delay: number; children: React.ReactNode;
+}) {
+  const ref = useReveal();
   return (
-    <div className="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
-      style={{ border: "1px solid #F0D0E0" }}>
-      <div className={`w-12 h-12 ${bg} rounded-full flex items-center justify-center mx-auto mb-3`}>
-        <Icon size={22} className={color} />
+    <div
+      ref={ref}
+      className="relative flex gap-6 mb-10"
+      style={{ opacity: 0, transform: "translateY(16px)", transition: `opacity 0.5s ease ${delay}ms, transform 0.5s ease ${delay}ms` }}
+    >
+      {/* Dot + line */}
+      <div className="flex flex-col items-center flex-shrink-0" style={{ width: 40 }}>
+        <div
+          className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 z-10"
+          style={{ background: accent, boxShadow: `0 0 0 4px ${accent}22` }}
+        >
+          {num}
+        </div>
       </div>
-      <div className={`font-serif text-4xl font-bold mb-1 ${color}`}>
-        <span ref={ref}>0</span>
+
+      {/* Card */}
+      <div className="flex-1 bg-white rounded-2xl shadow-sm overflow-hidden mb-2"
+        style={{ border: "1px solid #F0D0E0" }}>
+        {/* Header */}
+        <div className={`flex items-center justify-between gap-4 px-6 py-4 bg-gradient-to-r ${bg}`}
+          style={{ borderBottom: "1px solid #F0D0E0" }}>
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: `${accent}18` }}>
+              <Icon size={18} style={{ color: accent }} />
+            </div>
+            <h3 className="font-serif text-lg font-bold" style={{ color: "#2D1B25" }}>{title}</h3>
+          </div>
+          <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full flex-shrink-0"
+            style={{ background: `${accent}18`, color: accent }}>{time}</span>
+        </div>
+        {/* Body */}
+        <div className="px-6 py-5">{children}</div>
       </div>
-      <p className="text-slate-500 text-sm font-medium">{label}</p>
     </div>
   );
 }
 
-const CARDS = [
-  { key: "fiches",   icon: ClipboardList, title: "Fiches de Préparation",  desc: "Séances structurées selon les compétences du programme officiel, avec objectifs, déroulement et évaluation formative intégrée.", color: "text-blue-600",   bg: "bg-blue-50",   filter: "fiches" },
-  { key: "grilles",  icon: Eye,           title: "Grilles d'Observation",   desc: "Outils d'évaluation par compétences permettant une observation structurée des pratiques pédagogiques lors des séances.",            color: "text-indigo-600",bg: "bg-indigo-50", filter: "grilles" },
-  { key: "supports", icon: Presentation,  title: "Supports de Cours",       desc: "Présentations interactives, tutoriels et ressources numériques développés pour faciliter l'apprentissage des élèves.",              color: "text-violet-600",bg: "bg-violet-50", filter: "supports" },
-  { key: "rapport",  icon: FileText,      title: "Rapport de Stage",        desc: "Document de synthèse de l'ensemble du parcours de stage, rédigé selon les exigences du CRMEF Rabat et soumis en fin de formation.", color: "text-amber-600", bg: "bg-amber-50",  filter: "rapport" },
+function SeanceCard({ color, title, classe, methode, posture }: {
+  color: string; title: string; classe: string; methode: string; posture: string;
+}) {
+  return (
+    <div className="rounded-xl p-4 mb-3 last:mb-0"
+      style={{ background: `${color}10`, border: `1px solid ${color}30` }}>
+      <div className="flex items-start justify-between gap-2 mb-1">
+        <span className="font-semibold text-sm" style={{ color: "#3D2B35" }}>{title}</span>
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+          style={{ background: `${color}20`, color }}>{classe}</span>
+      </div>
+      <p className="text-xs text-slate-500 mb-2">{methode}</p>
+      <span className="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full"
+        style={{ background: "rgba(192,132,160,0.12)", color: "#9B5B7A" }}>
+        Posture : {posture}
+      </span>
+    </div>
+  );
+}
+
+const STEPPER = [
+  { n: "01", label: "Contexte" },
+  { n: "02", label: "Observation" },
+  { n: "03", label: "Séances" },
+  { n: "04", label: "Défis" },
+  { n: "05", label: "Réflexion" },
+  { n: "06", label: "Compétences" },
+];
+
+const COMPETENCES = [
+  { icon: ClipboardList, label: "Conception de fiches de préparation" },
+  { icon: Users,          label: "Gestion de classe" },
+  { icon: MonitorSmartphone, label: "Intégration des TICE" },
+  { icon: RotateCcw,     label: "Pédagogie différenciée" },
+  { icon: BarChart2,     label: "Évaluation formative & sommative" },
+  { icon: Handshake,     label: "Collaboration tuteur & CRMEF" },
 ];
 
 export default function Rapport() {
   return (
-    <div className="p-8 max-w-5xl mx-auto">
-      <div className="mb-8">
-        <h2 className="font-serif text-3xl font-bold mb-1" style={{ color: "#3D2B35" }}>
-          Rapport de Stage — CRMEF Rabat
-        </h2>
-        <p className="text-slate-500">Bilan de l'année de formation au Lycée Hommane El Fetouaki · 2025–2026</p>
+    <div className="p-8 max-w-4xl mx-auto">
+
+      {/* En-tête */}
+      <div className="rounded-3xl px-10 py-10 mb-8 text-center"
+        style={{ background: "linear-gradient(135deg, #F5E6EE 0%, #FDF8FA 100%)", border: "1px solid #E8B4C8" }}>
+        <span className="inline-block text-xs font-semibold px-3.5 py-1.5 rounded-full mb-4"
+          style={{ background: "rgba(192,132,160,0.15)", color: "#9B5B7A", border: "1px solid rgba(192,132,160,0.3)" }}>
+          <MapPin size={11} className="inline mr-1" />Lycée Hommane El Fetouaki · Rabat
+        </span>
+        <h1 className="font-serif text-4xl font-bold mb-2" style={{ color: "#2D1B25" }}>Mon Parcours de Stage</h1>
+        <p className="text-sm font-medium" style={{ color: "#9B7A8A" }}>
+          Présentation · 5 à 7 minutes · Soutenance CRMEF 2025–2026
+        </p>
       </div>
 
-      {/* KPI */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-        <StatCard icon={ClipboardList} value={4} label="Fiches de préparation" color="text-blue-600"   bg="bg-blue-50"   />
-        <StatCard icon={Eye}           value={3} label="Grilles d'observation"  color="text-indigo-600" bg="bg-indigo-50" />
-        <StatCard icon={Presentation}  value={3} label="Supports de cours"      color="text-violet-600" bg="bg-violet-50" />
-        <StatCard icon={FileText}      value={1} label="Rapport de Stage"        color="text-amber-600"  bg="bg-amber-50"  />
-      </div>
-
-      {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
-        {CARDS.map(({ key, icon: Icon, title, desc, color, bg, filter }) => (
-          <div key={key}
-            className="bg-white rounded-xl p-6 shadow-sm transition-all duration-200"
-            style={{ border: "1px solid #F0D0E0" }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#E8B4C8"; (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 16px rgba(192,132,160,0.12)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#F0D0E0"; (e.currentTarget as HTMLElement).style.boxShadow = ""; }}
-          >
-            <div className={`w-11 h-11 ${bg} rounded-xl flex items-center justify-center mb-4`}>
-              <Icon size={22} className={color} />
-            </div>
-            <h3 className="font-semibold text-base mb-2" style={{ color: "#3D2B35" }}>{title}</h3>
-            <p className="text-slate-500 text-sm leading-relaxed mb-4">{desc}</p>
-            <Link href={`/documents?cat=${filter}`}
-              className="inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-3 transition-all"
-              style={{ color: "#C084A0" }}
-            >
-              <ArrowRight size={14} /> Consulter dans Mes Documents
-            </Link>
+      {/* Stepper */}
+      <div className="bg-white rounded-2xl px-6 py-4 mb-10 flex flex-wrap items-center justify-between gap-2"
+        style={{ border: "1px solid #F0D0E0", boxShadow: "0 2px 12px rgba(192,132,160,0.08)" }}>
+        {STEPPER.map((s, i) => (
+          <div key={s.n} className="flex items-center gap-1.5">
+            <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[11px] font-bold flex-shrink-0"
+              style={{ background: "#C084A0" }}>{s.n}</div>
+            <span className="text-xs font-medium hidden sm:block" style={{ color: "#9B7A8A" }}>{s.label}</span>
+            {i < STEPPER.length - 1 && (
+              <div className="hidden sm:block ml-1.5 w-6 h-0.5 rounded" style={{ background: "#E8B4C8" }} />
+            )}
           </div>
         ))}
       </div>
 
-      {/* Établissement — gradient rose */}
-      <div className="rounded-2xl p-8 text-white shadow-lg"
-        style={{ background: "linear-gradient(135deg, #C084A0 0%, #9B5B7A 100%)" }}>
-        <div className="flex items-center gap-5 mb-6 pb-6" style={{ borderBottom: "1px solid rgba(255,255,255,0.15)" }}>
-          <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)" }}>
-            <Building size={26} className="text-white" />
+      {/* Timeline */}
+      <div className="relative">
+        {/* Vertical line */}
+        <div className="absolute top-5 bottom-5 left-5 w-0.5 rounded-full"
+          style={{ background: "linear-gradient(to bottom, #C084A0, #E8B4C8)" }} />
+
+        {/* Step 1 — Contexte */}
+        <TimelineCard {...STEPS[0]} delay={0}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            {[
+              { icon: Building, text: "Lycée Qualifiant Hommane El Fetouaki, Rabat" },
+              { icon: Calendar, text: "Année scolaire 2025–2026" },
+              { icon: Users,    text: "Classes TSCF 1 et TSCF 3" },
+              { icon: School,   text: "Encadrement CRMEF Rabat–Salé–Kénitra" },
+            ].map(({ icon: Icon, text }) => (
+              <div key={text} className="flex items-center gap-2.5" style={{ color: "#5A3D4A" }}>
+                <Icon size={15} style={{ color: "#C084A0", flexShrink: 0 }} />
+                <span>{text}</span>
+              </div>
+            ))}
           </div>
-          <div>
-            <h3 className="font-serif text-xl font-semibold text-white">Lycée Hommane El Fetouaki</h3>
-            <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>Établissement d'accueil du stage de formation initiale</p>
+          <div className="mt-4">
+            <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full"
+              style={{ background: "rgba(192,132,160,0.15)", color: "#9B5B7A", border: "1px solid rgba(192,132,160,0.25)" }}>
+              Enseignement Secondaire Qualifiant · Informatique
+            </span>
           </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[
-            { icon: MapPin,   text: "Rabat — Académie AREF Rabat-Salé-Kénitra" },
-            { icon: Users,    text: "Secondaire Qualifiant — Section Informatique" },
-            { icon: Calendar, text: "Année scolaire 2025–2026" },
-            { icon: School,   text: "Encadrement CRMEF Rabat" },
-          ].map(({ icon: Icon, text }) => (
-            <div key={text} className="flex items-center gap-3 text-sm" style={{ color: "rgba(255,255,255,0.8)" }}>
-              <Icon size={15} className="flex-shrink-0" style={{ color: "rgba(255,255,255,0.6)" }} /> {text}
-            </div>
-          ))}
-        </div>
+        </TimelineCard>
+
+        {/* Step 2 — Observation */}
+        <TimelineCard {...STEPS[1]} delay={80}>
+          <div className="space-y-2 text-sm" style={{ color: "#5A3D4A" }}>
+            {[
+              "Observation des classes, analyse du niveau des élèves",
+              "Découverte du programme officiel (Word, Excel)",
+              "Prise de contact avec le tuteur de stage",
+              "Premier contact avec les élèves",
+            ].map(item => (
+              <div key={item} className="flex items-start gap-2">
+                <span className="mt-1 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#C084A0" }} />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4">
+            <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full"
+              style={{ background: "rgba(192,132,160,0.12)", color: "#9B5B7A" }}>
+              Semaines 1–2
+            </span>
+          </div>
+        </TimelineCard>
+
+        {/* Step 3 — Séances */}
+        <TimelineCard {...STEPS[2]} delay={160}>
+          <SeanceCard
+            color="#7C3AED"
+            title="Séance 1 — Mise en forme de texte avec Word"
+            classe="TSCF 1"
+            methode="Mise en situation, accroche avec un document mal formaté"
+            posture="expert"
+          />
+          <SeanceCard
+            color="#2563EB"
+            title="Séance 2 — Introduction à Excel : interface et saisie"
+            classe="TSCF 3"
+            methode="Apprentissage par découverte guidée"
+            posture="guide"
+          />
+          <SeanceCard
+            color="#059669"
+            title="Séance 3 — Formules Excel de base : SOMME, MOYENNE"
+            classe="TSCF 3"
+            methode="Résolution de problèmes concrets"
+            posture="facilitateur"
+          />
+          <SeanceCard
+            color="#C084A0"
+            title="Évaluation sommative — Word + Excel"
+            classe="TSCF 1 & TSCF 3"
+            methode="Évaluation des acquis de fin de cycle"
+            posture="expert"
+          />
+        </TimelineCard>
+
+        {/* Step 4 — Difficultés */}
+        <TimelineCard {...STEPS[3]} delay={240}>
+          <div className="space-y-2.5">
+            {[
+              "Gestion du temps en classe : activités plus longues que prévu",
+              "Élèves absents des postes informatiques (pas tous devant un PC)",
+              "Hétérogénéité du niveau entre élèves",
+              "Adapter l'explication en arabe dialectal et français simultanément",
+            ].map(item => (
+              <div key={item} className="flex items-start gap-2.5 text-sm"
+                style={{ color: "#92400E" }}>
+                <span className="text-base leading-none flex-shrink-0">⚠️</span>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </TimelineCard>
+
+        {/* Step 5 — Réflexion */}
+        <TimelineCard {...STEPS[4]} delay={320}>
+          <div className="space-y-2">
+            {[
+              "L'écart entre la planification et la réalité de la classe",
+              "L'importance de la flexibilité pédagogique",
+              "Développement de ma posture d'enseignante : guide, expert, facilitateur",
+              "La valeur de l'évaluation formative continue",
+            ].map(item => (
+              <div key={item} className="flex items-start gap-2.5 text-sm" style={{ color: "#065F46" }}>
+                <Lightbulb size={14} className="flex-shrink-0 mt-0.5" style={{ color: "#059669" }} />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </TimelineCard>
+
+        {/* Step 6 — Compétences */}
+        <TimelineCard {...STEPS[5]} delay={400}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {COMPETENCES.map(({ icon: Icon, label }) => (
+              <div key={label}
+                className="flex flex-col items-center text-center gap-2 rounded-xl p-3"
+                style={{ background: "rgba(192,132,160,0.08)", border: "1px solid rgba(192,132,160,0.18)" }}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+                  style={{ background: "rgba(192,132,160,0.15)" }}>
+                  <Icon size={16} style={{ color: "#C084A0" }} />
+                </div>
+                <span className="text-xs font-medium leading-tight" style={{ color: "#3D2B35" }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </TimelineCard>
       </div>
     </div>
   );

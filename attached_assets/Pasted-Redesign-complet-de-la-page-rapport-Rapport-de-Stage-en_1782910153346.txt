@@ -1,0 +1,116 @@
+Redesign complet de la page rapport (Rapport de Stage) en une timeline verticale narrative, structurée pour une présentation orale de 5 à 7 minutes devant un jury. Ne touche à aucune autre page.
+🎯 OBJECTIF DE LA PAGE :
+La page doit fonctionner comme un support de présentation visuel que Salma peut afficher pendant sa soutenance. Chaque étape de la timeline = environ 1 minute de parole.
+
+🗂️ STRUCTURE DE LA TIMELINE — 6 étapes dans l'ordre :
+Étape 1 — Contexte du stage (~1 min)
+
+Icône : MapPin ou Building
+Titre : "Contexte & Établissement"
+Contenu :
+
+Lieu : Lycée Qualifiant Hommane El Fetouaki, Rabat
+Durée : Année scolaire 2025–2026
+Classes : TSCF 1 et TSCF 3
+Encadrement : CRMEF Rabat–Salé–Kénitra
+Badge coloré : "Enseignement Secondaire Qualifiant · Informatique"
+
+
+
+Étape 2 — Prise en main (~1 min)
+
+Icône : Eye (observation)
+Titre : "Phase d'observation & Prise en main"
+Contenu :
+
+Observation des classes, analyse du niveau des élèves
+Découverte du programme officiel (Word, Excel)
+Prise de contact avec le tuteur de stage
+Premier contact avec les élèves
+Tag : "Semaines 1–2"
+
+
+
+Étape 3 — Séances enseignées (~2 min — étape la plus large)
+
+Icône : BookOpen
+Titre : "Mes Séances d'Enseignement"
+Contenu : 3 cartes horizontales imbriquées dans la timeline, une par séance :
+
+🟣 Séance 1 — Mise en forme de texte avec Word (TSCF 1) — Mise en situation, accroche avec un document mal formaté
+🟣 Séance 2 — Introduction à Excel : interface et saisie (TSCF 3) — Apprentissage par découverte guidée
+🟣 Séance 3 — Formules Excel de base : SOMME, MOYENNE (TSCF 3) — Résolution de problèmes concrets
+🟣 Évaluation sommative — Évaluation Word + Excel (TSCF 1 & TSCF 3)
+
+
+Sous chaque carte : une petite puce "Posture : guide / expert / facilitateur" selon la séance
+
+Étape 4 — Difficultés rencontrées (~1 min)
+
+Icône : AlertTriangle ou Zap
+Titre : "Défis & Difficultés"
+Contenu : liste visuelle avec icônes ⚠️ :
+
+Gestion du temps en classe : activités plus longues que prévu
+Élèves absents des postes informatiques (pas tous devant un PC)
+Hétérogénéité du niveau entre élèves
+Adapter l'explication en arabe dialectal et français simultanément
+
+
+Style : fond légèrement orangé/ambre doux pour cette étape (pour la distinguer visuellement)
+
+Étape 5 — Ce que j'ai appris / Analyse réflexive (~1 min)
+
+Icône : Lightbulb
+Titre : "Apprentissages & Réflexion"
+Contenu :
+
+L'écart entre la planification et la réalité de la classe
+L'importance de la flexibilité pédagogique
+Développement de ma posture d'enseignante : guide, expert, facilitateur
+La valeur de l'évaluation formative continue
+
+
+Style : fond vert très doux ou bleu pastel pour évoquer la croissance
+
+Étape 6 — Compétences développées (~1 min)
+
+Icône : Star ou Award
+Titre : "Compétences Développées"
+Contenu : grille 2×3 de badges/pills avec icônes :
+
+📋 Conception de fiches de préparation
+🎯 Gestion de classe
+💻 Intégration des TICE
+🔄 Pédagogie différenciée
+📊 Évaluation formative & sommative
+🤝 Collaboration avec tuteur et CRMEF
+
+
+Style : fond rose très pâle (cohérent avec la palette #F5E6EE)
+
+
+🎨 DESIGN DE LA TIMELINE :
+
+Ligne verticale centrale gauche : couleur #C084A0 avec épaisseur 2px, style continu
+Chaque étape : cercle coloré sur la ligne avec numéro 01 à 06 en blanc, fond #C084A0
+Carte de chaque étape : à droite de la ligne, fond blanc, rounded-2xl, border border-[#F0D0E0], shadow-sm
+Header de chaque carte : fond dégradé très léger from-[#F5E6EE] to-white, avec l'icône à gauche et le titre en font-serif text-[#2D1B25]
+Étiquette de temps (ex. "~1 min") en petit badge rose pâle en haut à droite de chaque carte
+Animation : opacity-0 translate-y-4 → opacity-100 translate-y-0 au scroll (intersection observer), délai progressif par étape
+
+⏱️ BARRE DE PROGRESSION EN HAUT DE PAGE :
+Ajouter juste sous le titre de la page une barre horizontale stylisée montrant les 6 étapes avec leurs numéros et titres courts (comme un stepper), non cliquable, juste visuelle, couleur #C084A0.
+📌 EN-TÊTE DE LA PAGE :
+
+Titre : "Mon Parcours de Stage"
+Sous-titre : "Présentation · 5 à 7 minutes · Soutenance CRMEF 2025–2026"
+Badge : "Lycée Hommane El Fetouaki · Rabat"
+Fond de l'en-tête : dégradé rose pastel from-[#F5E6EE] to-[#FDF8FA]
+
+⚙️ CONTRAINTES :
+
+Utiliser les composants et icônes Lucide React déjà installés
+Respecter la palette rose/prune déjà appliquée au reste du site
+La page doit être lisible sur grand écran (mode présentation sur vidéoprojecteur)
+Ne pas toucher aux autres pages
