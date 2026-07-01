@@ -36,13 +36,18 @@ const FILTERS = [
 
 type UnifiedDoc = (Doc & { isLocal?: false }) | LocalDoc;
 
+function resolveDocUrl(path: string): string {
+  if (path.startsWith("/objects/")) return `/api/storage${path}`;
+  return path;
+}
+
 function openDoc(doc: UnifiedDoc) {
-  window.open(doc.path, "_blank", "noopener");
+  window.open(resolveDocUrl(doc.path), "_blank", "noopener");
 }
 
 function downloadDoc(doc: UnifiedDoc) {
   const a = document.createElement("a");
-  a.href = doc.path;
+  a.href = resolveDocUrl(doc.path);
   a.download = (doc as LocalDoc).fileName ?? doc.name;
   document.body.appendChild(a);
   a.click();
@@ -76,9 +81,9 @@ function DocRow({ doc, isAdmin, onView, onEdit, onDeleteLocal, onDeleteApi, onPu
               <HardDrive size={8} /> LOCAL
             </span>
           )}
-          {!isLocal && doc.path?.startsWith("/api/uploads/") && (
+          {!isLocal && (doc.path?.startsWith("/api/uploads/") || doc.path?.startsWith("/objects/")) && (
             <span className="inline-flex items-center gap-1 text-[9px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-1.5 py-0.5 rounded-full flex-shrink-0">
-              <Cloud size={8} /> SERVEUR
+              <Cloud size={8} /> {doc.path?.startsWith("/objects/") ? "CLOUD" : "SERVEUR"}
             </span>
           )}
         </div>
@@ -149,7 +154,7 @@ function DocRow({ doc, isAdmin, onView, onEdit, onDeleteLocal, onDeleteApi, onPu
 }
 
 export default function Documents() {
-  const { docs, isLoading, deleteDoc, uploadDoc } = useDocuments();
+  const { docs, isLoading, deleteDoc, createDoc } = useDocuments();
   const { localDocs, deleteLocalDoc } = useLocalDocs();
   const { isAdmin } = useAuth();
 
@@ -194,17 +199,30 @@ export default function Documents() {
   const handlePublish = async (localDoc: LocalDoc) => {
     setPublishingId(localDoc.id);
     try {
-      const res = await fetch(localDoc.fileData);
-      const blob = await res.blob();
+      const dataRes = await fetch(localDoc.fileData);
+      const blob = await dataRes.blob();
       const file = new File([blob], localDoc.fileName, { type: blob.type });
-      const fd = new FormData();
-      fd.append("file", file);
-      fd.append("category", localDoc.category);
-      fd.append("name", localDoc.name);
-      fd.append("description", localDoc.description ?? "");
-      fd.append("date", localDoc.date);
-      fd.append("type", localDoc.type);
-      await uploadDoc(fd);
+
+      const urlRes = await fetch("/api/storage/uploads/request-url", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: file.name, size: file.size, contentType: file.type }),
+      });
+      if (!urlRes.ok) throw new Error("Impossible d'obtenir l'URL d'upload.");
+      const { uploadURL, objectPath } = await urlRes.json() as { uploadURL: string; objectPath: string };
+
+      const putRes = await fetch(uploadURL, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
+      if (!putRes.ok) throw new Error("Échec de l'upload vers le cloud.");
+
+      await createDoc({
+        category: localDoc.category,
+        name: localDoc.name,
+        description: localDoc.description ?? "",
+        date: localDoc.date,
+        type: localDoc.type,
+        path: objectPath,
+      });
       deleteLocalDoc(localDoc.id);
       setPublishedId(localDoc.id);
       setTimeout(() => setPublishedId(null), 3000);

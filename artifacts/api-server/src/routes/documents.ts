@@ -119,6 +119,7 @@ router.delete("/documents/:id", requireAdmin, async (req, res): Promise<void> =>
       /* ignore cleanup errors */
     }
   }
+  /* GCS object paths (/objects/...) are managed by Object Storage — no local cleanup needed */
 
   res.sendStatus(204);
 });

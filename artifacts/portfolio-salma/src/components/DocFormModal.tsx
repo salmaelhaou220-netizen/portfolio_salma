@@ -32,8 +32,27 @@ const ACCEPT = ".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.gif,.webp,.svg";
 
 type UploadMode = "local" | "server" | "url";
 
+async function uploadToCloud(file: File): Promise<string> {
+  const urlRes = await fetch("/api/storage/uploads/request-url", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: file.name, size: file.size, contentType: file.type }),
+  });
+  if (!urlRes.ok) throw new Error("Impossible d'obtenir l'URL d'upload.");
+  const { uploadURL, objectPath } = await urlRes.json() as { uploadURL: string; objectPath: string };
+
+  const putRes = await fetch(uploadURL, {
+    method: "PUT",
+    headers: { "Content-Type": file.type },
+    body: file,
+  });
+  if (!putRes.ok) throw new Error("Échec de l'upload vers le cloud.");
+  return objectPath;
+}
+
 export default function DocFormModal({ open, doc, defaultCategory, onClose }: Props) {
-  const { createDoc, updateDoc, uploadDoc, createPending, updatePending, uploadPending } = useDocuments();
+  const { createDoc, updateDoc, createPending, updatePending } = useDocuments();
   const { addLocalDoc, MAX_FILE_BYTES } = useLocalDocs();
   const { isAdmin } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -51,6 +70,7 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<string | null>(null);
 
   useEffect(() => {
     if (doc) {
@@ -63,19 +83,16 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
     setSelectedFile(null);
     setError("");
     setIsProcessing(false);
+    setUploadProgress(null);
   }, [doc, defaultCategory, open, isAdmin]);
 
   if (!open) return null;
 
-  const pending = createPending || updatePending || uploadPending || isProcessing;
+  const pending = createPending || updatePending || isProcessing;
 
   const handleFileSelect = (file: File) => {
     if (uploadMode === "local" && file.size > MAX_FILE_BYTES) {
       setError(`Fichier trop volumineux pour le stockage local (max 5 Mo). Taille : ${formatFileSize(file.size)}`);
-      return;
-    }
-    if (uploadMode === "server" && file.size > 20 * 1024 * 1024) {
-      setError(`Fichier trop volumineux (max 20 Mo). Taille : ${formatFileSize(file.size)}`);
       return;
     }
     setError("");
@@ -115,14 +132,17 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
       if (doc) {
         await updateDoc({ id: doc.id, ...form });
       } else if (selectedFile && uploadMode === "server") {
-        const fd = new FormData();
-        fd.append("file", selectedFile);
-        fd.append("category", form.category);
-        fd.append("name", form.name);
-        fd.append("description", form.description);
-        fd.append("date", form.date || new Date().toLocaleDateString("fr-FR", { month: "short", year: "numeric" }));
-        fd.append("type", form.type);
-        await uploadDoc(fd);
+        setUploadProgress("Envoi vers le cloud…");
+        const objectPath = await uploadToCloud(selectedFile);
+        setUploadProgress("Enregistrement…");
+        await createDoc({
+          category: form.category,
+          name: form.name,
+          description: form.description,
+          date: form.date || new Date().toLocaleDateString("fr-FR", { month: "short", year: "numeric" }),
+          type: form.type,
+          path: objectPath,
+        });
       } else if (selectedFile && uploadMode === "local") {
         const dataUrl = await readFileAsDataUrl(selectedFile);
         addLocalDoc(
@@ -145,6 +165,7 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
       setError(err instanceof Error ? err.message : "Une erreur est survenue.");
     } finally {
       setIsProcessing(false);
+      setUploadProgress(null);
     }
   };
 
@@ -155,7 +176,7 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
   const labelCls = "text-[10px] font-bold text-slate-500 uppercase tracking-widest";
 
   const MODES: { key: UploadMode; icon: React.ElementType; label: string; adminOnly?: boolean }[] = [
-    { key: "server", icon: Cloud, label: "Serveur (permanent)", adminOnly: true },
+    { key: "server", icon: Cloud, label: "Cloud (permanent)", adminOnly: true },
     { key: "local",  icon: HardDrive, label: "Local (navigateur)" },
     { key: "url",    icon: File, label: "Chemin / URL" },
   ];
@@ -222,7 +243,7 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
                   ? "bg-blue-50 border border-blue-100 text-blue-700"
                   : "bg-slate-50 border border-slate-200 text-slate-600"
             )}>
-              {uploadMode === "server" && <><Cloud size={13} className="flex-shrink-0 mt-0.5" /><span>Le fichier sera stocké sur le serveur et accessible via l'URL publique du portfolio. <strong>Permanent.</strong></span></>}
+              {uploadMode === "server" && <><Cloud size={13} className="flex-shrink-0 mt-0.5" /><span>Le fichier sera stocké sur <strong>Google Cloud Storage</strong> — permanent, sans limite de taille.</span></>}
               {uploadMode === "local"  && <><HardDrive size={13} className="flex-shrink-0 mt-0.5" /><span>Sauvegardé dans le navigateur (localStorage). Visible uniquement sur cet appareil. Max 5 Mo.</span></>}
               {uploadMode === "url"    && <><File size={13} className="flex-shrink-0 mt-0.5" /><span>Entrez un chemin relatif ou une URL externe pointant vers le fichier.</span></>}
             </div>
@@ -262,7 +283,7 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
                     <p className="text-sm font-semibold text-slate-800 truncate max-w-[280px]">{selectedFile.name}</p>
                     <p className="text-xs text-slate-400 mt-0.5">
                       {formatFileSize(selectedFile.size)} · {guessDocType(selectedFile).toUpperCase()}
-                      {uploadMode === "server" && <span className="ml-1 text-indigo-600 font-semibold">→ Serveur</span>}
+                      {uploadMode === "server" && <span className="ml-1 text-indigo-600 font-semibold">→ Cloud</span>}
                     </p>
                   </div>
                   <button
@@ -284,7 +305,7 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
                       ou <span className={cn("font-semibold", uploadMode === "server" ? "text-indigo-600" : "text-blue-600")}>cliquez pour parcourir</span>
                     </p>
                     <p className="text-[10px] text-slate-400 mt-2">
-                      PDF, DOC, PPT, JPG · {uploadMode === "server" ? "Max 20 Mo" : "Max 5 Mo"}
+                      PDF, DOC, PPT, JPG · {uploadMode === "server" ? "Illimité (Cloud)" : "Max 5 Mo"}
                     </p>
                   </div>
                 </div>
@@ -359,13 +380,13 @@ export default function DocFormModal({ open, doc, defaultCategory, onClose }: Pr
                 : "bg-blue-600 hover:bg-blue-700 text-white"
             )}
           >
-            {isProcessing || uploadPending ? (
+            {isProcessing ? (
               <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              {uploadMode === "server" ? "Upload en cours…" : "Traitement…"}</>
+              {uploadProgress ?? (uploadMode === "server" ? "Upload en cours…" : "Traitement…")}</>
             ) : (
               <>
                 {uploadMode === "server" ? <Cloud size={14} /> : <File size={14} />}
-                {doc ? "Mettre à jour" : uploadMode === "server" ? "Publier sur le serveur" : selectedFile ? "Ajouter le document" : "Enregistrer"}
+                {doc ? "Mettre à jour" : uploadMode === "server" ? "Publier sur le cloud" : selectedFile ? "Ajouter le document" : "Enregistrer"}
               </>
             )}
           </button>

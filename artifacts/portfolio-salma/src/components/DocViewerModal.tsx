@@ -14,10 +14,16 @@ function isBase64(path: string) {
   return path.startsWith("data:");
 }
 
+function resolveDocUrl(path: string): string {
+  if (path.startsWith("/objects/")) return `/api/storage${path}`;
+  return path;
+}
+
 export default function DocViewerModal({ doc, onClose }: Props) {
   if (!doc) return null;
 
-  const path = doc.path;
+  const rawPath = doc.path;
+  const path = resolveDocUrl(rawPath);
   const type = doc.type;
 
   const handleDownload = () => {
