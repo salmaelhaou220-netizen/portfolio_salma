@@ -1,35 +1,18 @@
 import { useEffect, useRef } from "react";
+import { Link } from "wouter";
 import {
   MapPin, Eye, BookOpen, AlertTriangle, Lightbulb, Award,
   Users, Calendar, School, Building, ClipboardList, MonitorSmartphone,
-  RotateCcw, BarChart2, Handshake,
+  RotateCcw, BarChart2, Handshake, ArrowRight, FileText, Presentation,
 } from "lucide-react";
 
 const STEPS = [
-  {
-    num: "01", icon: MapPin, title: "Contexte & Établissement", time: "~1 min",
-    bg: "from-[#F5E6EE] to-white", accent: "#C084A0",
-  },
-  {
-    num: "02", icon: Eye, title: "Phase d'observation & Prise en main", time: "~1 min",
-    bg: "from-[#F5E6EE] to-white", accent: "#C084A0",
-  },
-  {
-    num: "03", icon: BookOpen, title: "Mes Séances d'Enseignement", time: "~2 min",
-    bg: "from-[#F5E6EE] to-white", accent: "#C084A0",
-  },
-  {
-    num: "04", icon: AlertTriangle, title: "Défis & Difficultés", time: "~1 min",
-    bg: "from-[#FFF4E6] to-white", accent: "#D97706",
-  },
-  {
-    num: "05", icon: Lightbulb, title: "Apprentissages & Réflexion", time: "~1 min",
-    bg: "from-[#EDFDF4] to-white", accent: "#059669",
-  },
-  {
-    num: "06", icon: Award, title: "Compétences Développées", time: "~1 min",
-    bg: "from-[#F5E6EE] to-white", accent: "#C084A0",
-  },
+  { num: "01", icon: MapPin,          title: "Contexte & Établissement",           bg: "from-[#F5E6EE] to-white", accent: "#C084A0" },
+  { num: "02", icon: Eye,             title: "Phase d'observation & Prise en main", bg: "from-[#F5E6EE] to-white", accent: "#C084A0" },
+  { num: "03", icon: BookOpen,        title: "Mes Séances d'Enseignement",          bg: "from-[#F5E6EE] to-white", accent: "#C084A0" },
+  { num: "04", icon: AlertTriangle,   title: "Défis & Difficultés",                 bg: "from-[#FFF4E6] to-white", accent: "#D97706" },
+  { num: "05", icon: Lightbulb,       title: "Apprentissages & Réflexion",          bg: "from-[#EDFDF4] to-white", accent: "#059669" },
+  { num: "06", icon: Award,           title: "Compétences Développées",             bg: "from-[#F5E6EE] to-white", accent: "#C084A0" },
 ];
 
 function useReveal() {
@@ -48,9 +31,9 @@ function useReveal() {
 }
 
 function TimelineCard({
-  num, icon: Icon, title, time, bg, accent, delay, children,
+  num, icon: Icon, title, bg, accent, delay, children,
 }: {
-  num: string; icon: React.ElementType; title: string; time: string;
+  num: string; icon: React.ElementType; title: string;
   bg: string; accent: string; delay: number; children: React.ReactNode;
 }) {
   const ref = useReveal();
@@ -60,7 +43,6 @@ function TimelineCard({
       className="relative flex gap-6 mb-10"
       style={{ opacity: 0, transform: "translateY(16px)", transition: `opacity 0.5s ease ${delay}ms, transform 0.5s ease ${delay}ms` }}
     >
-      {/* Dot + line */}
       <div className="flex flex-col items-center flex-shrink-0" style={{ width: 40 }}>
         <div
           className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 z-10"
@@ -70,26 +52,32 @@ function TimelineCard({
         </div>
       </div>
 
-      {/* Card */}
       <div className="flex-1 bg-white rounded-2xl shadow-sm overflow-hidden mb-2"
         style={{ border: "1px solid #F0D0E0" }}>
-        {/* Header */}
-        <div className={`flex items-center justify-between gap-4 px-6 py-4 bg-gradient-to-r ${bg}`}
+        <div className={`flex items-center gap-4 px-6 py-4 bg-gradient-to-r ${bg}`}
           style={{ borderBottom: "1px solid #F0D0E0" }}>
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: `${accent}18` }}>
-              <Icon size={18} style={{ color: accent }} />
-            </div>
-            <h3 className="font-serif text-lg font-bold" style={{ color: "#2D1B25" }}>{title}</h3>
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ background: `${accent}18` }}>
+            <Icon size={18} style={{ color: accent }} />
           </div>
-          <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full flex-shrink-0"
-            style={{ background: `${accent}18`, color: accent }}>{time}</span>
+          <h3 className="font-serif text-lg font-bold" style={{ color: "#2D1B25" }}>{title}</h3>
         </div>
-        {/* Body */}
         <div className="px-6 py-5">{children}</div>
       </div>
     </div>
+  );
+}
+
+function DocLink({ href, icon: Icon, label }: { href: string; icon: React.ElementType; label: string }) {
+  return (
+    <Link href={href}
+      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all"
+      style={{ background: "rgba(192,132,160,0.1)", color: "#9B5B7A", border: "1px solid rgba(192,132,160,0.25)" }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(192,132,160,0.2)"; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(192,132,160,0.1)"; }}
+    >
+      <Icon size={13} /> {label} <ArrowRight size={11} />
+    </Link>
   );
 }
 
@@ -123,12 +111,12 @@ const STEPPER = [
 ];
 
 const COMPETENCES = [
-  { icon: ClipboardList, label: "Conception de fiches de préparation" },
-  { icon: Users,          label: "Gestion de classe" },
+  { icon: ClipboardList,    label: "Conception de fiches de préparation" },
+  { icon: Users,            label: "Gestion de classe" },
   { icon: MonitorSmartphone, label: "Intégration des TICE" },
-  { icon: RotateCcw,     label: "Pédagogie différenciée" },
-  { icon: BarChart2,     label: "Évaluation formative & sommative" },
-  { icon: Handshake,     label: "Collaboration tuteur & CRMEF" },
+  { icon: RotateCcw,        label: "Pédagogie différenciée" },
+  { icon: BarChart2,        label: "Évaluation formative & sommative" },
+  { icon: Handshake,        label: "Collaboration tuteur & CRMEF" },
 ];
 
 export default function Rapport() {
@@ -144,7 +132,7 @@ export default function Rapport() {
         </span>
         <h1 className="font-serif text-4xl font-bold mb-2" style={{ color: "#2D1B25" }}>Mon Parcours de Stage</h1>
         <p className="text-sm font-medium" style={{ color: "#9B7A8A" }}>
-          Présentation · 5 à 7 minutes · Soutenance CRMEF 2025–2026
+          Année scolaire 2025–2026 · CRMEF Rabat
         </p>
       </div>
 
@@ -165,7 +153,6 @@ export default function Rapport() {
 
       {/* Timeline */}
       <div className="relative">
-        {/* Vertical line */}
         <div className="absolute top-5 bottom-5 left-5 w-0.5 rounded-full"
           style={{ background: "linear-gradient(to bottom, #C084A0, #E8B4C8)" }} />
 
@@ -194,7 +181,7 @@ export default function Rapport() {
 
         {/* Step 2 — Observation */}
         <TimelineCard {...STEPS[1]} delay={80}>
-          <div className="space-y-2 text-sm" style={{ color: "#5A3D4A" }}>
+          <div className="space-y-2 text-sm mb-4" style={{ color: "#5A3D4A" }}>
             {[
               "Observation des classes, analyse du niveau des élèves",
               "Découverte du programme officiel (Word, Excel)",
@@ -207,11 +194,12 @@ export default function Rapport() {
               </div>
             ))}
           </div>
-          <div className="mt-4">
+          <div className="flex items-center gap-3 flex-wrap">
             <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full"
               style={{ background: "rgba(192,132,160,0.12)", color: "#9B5B7A" }}>
-              Semaines 1–2
+              Semaines 1–4
             </span>
+            <DocLink href="/documents?cat=grilles" icon={FileText} label="Grilles d'observation" />
           </div>
         </TimelineCard>
 
@@ -245,6 +233,10 @@ export default function Rapport() {
             methode="Évaluation des acquis de fin de cycle"
             posture="expert"
           />
+          <div className="flex items-center gap-3 flex-wrap mt-4 pt-4" style={{ borderTop: "1px solid #F0D0E0" }}>
+            <DocLink href="/documents?cat=fiches"    icon={ClipboardList} label="Fiches de préparation" />
+            <DocLink href="/documents?cat=supports"  icon={Presentation}  label="Supports de cours" />
+          </div>
         </TimelineCard>
 
         {/* Step 4 — Difficultés */}
@@ -256,8 +248,7 @@ export default function Rapport() {
               "Hétérogénéité du niveau entre élèves",
               "Adapter l'explication en arabe dialectal et français simultanément",
             ].map(item => (
-              <div key={item} className="flex items-start gap-2.5 text-sm"
-                style={{ color: "#92400E" }}>
+              <div key={item} className="flex items-start gap-2.5 text-sm" style={{ color: "#92400E" }}>
                 <span className="text-base leading-none flex-shrink-0">⚠️</span>
                 <span>{item}</span>
               </div>
