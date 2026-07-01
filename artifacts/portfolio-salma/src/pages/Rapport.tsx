@@ -4,6 +4,7 @@ import {
   MapPin, Eye, BookOpen, AlertTriangle, Lightbulb, Award,
   Users, Calendar, School, Building, ClipboardList, MonitorSmartphone,
   RotateCcw, BarChart2, Handshake, ArrowRight, FileText, Presentation,
+  UserCheck, Monitor,
 } from "lucide-react";
 
 const STEPS = [
@@ -160,10 +161,12 @@ export default function Rapport() {
         <TimelineCard {...STEPS[0]} delay={0}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
             {[
-              { icon: Building, text: "Lycée Qualifiant Hommane El Fetouaki, Rabat" },
-              { icon: Calendar, text: "Année scolaire 2025–2026" },
-              { icon: Users,    text: "Classes TSCF 1 et TSCF 3" },
-              { icon: School,   text: "Encadrement CRMEF Rabat–Salé–Kénitra" },
+              { icon: Building,   text: "Lycée Qualifiant Hommane El Fetouaki, Rabat" },
+              { icon: Calendar,   text: "février 2025 – Juin 2026" },
+              { icon: Users,      text: "~36 élèves par classe" },
+              { icon: School,     text: "Encadrement CRMEF Rabat–Salé–Kénitra" },
+              { icon: UserCheck,  text: "Tuteur : M. BOUZIDI Abdelmajid" },
+              { icon: Monitor,    text: "Matière : Informatique" },
             ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2.5" style={{ color: "#5A3D4A" }}>
                 <Icon size={15} style={{ color: "#C084A0", flexShrink: 0 }} />
@@ -171,11 +174,12 @@ export default function Rapport() {
               </div>
             ))}
           </div>
-          <div className="mt-4">
+          <div className="mt-4 flex items-center gap-3 flex-wrap">
             <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full"
               style={{ background: "rgba(192,132,160,0.15)", color: "#9B5B7A", border: "1px solid rgba(192,132,160,0.25)" }}>
               Enseignement Secondaire Qualifiant · Informatique
             </span>
+            <DocLink href="/documents?cat=rapport" icon={FileText} label="Rapport de Stage" />
           </div>
         </TimelineCard>
 
