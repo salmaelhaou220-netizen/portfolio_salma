@@ -15,7 +15,7 @@ const productions = [
     titre: "Didactique & Planification",
     modules: "Planification des apprentissages · Didactique de l'informatique · Production didactique",
     productions: "Présentations · Travaux pratiques · Fiches pédagogiques, support de cours, fiche des évaluations",
-    lien: "https://drive.google.com/drive/folders/1phUkUpPuLqF9grotDy_au-QCrzt4W4Qm?usp=sharing",
+    lien: "https://drive.google.com/drive/folders/1Uue4rIXTDVrHtc2lkvfKmaLhQy-nDDKm?usp=sharing",
   },
   {
     numero: "02",
@@ -65,7 +65,7 @@ const productions = [
     titre: "Dimension Institutionnelle",
     modules: "Vie scolaire · Législation et éthique",
     productions: "Présentations",
-    lien: "https://drive.google.com/drive/folders/1phUkUpPuLqF9grotDy_au-QCrzt4W4Qm?usp=sharing",
+    lien: "https://drive.google.com/drive/folders/1AQBrY0neF5rMRnKNmOvZypFMjF3BJUwE?usp=sharing",
   },
   {
     numero: "07",
