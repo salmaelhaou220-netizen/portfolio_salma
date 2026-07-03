@@ -1,0 +1,72 @@
+const dimensions = [
+  {
+    numero: "01",
+    badge: "DIDACTIQUE",
+    badgeColor: "#C084A0",
+    icone: "BookOpen",
+    titre: "Didactique & Planification",
+    modules: "Planification des apprentissages · Didactique de l'informatique · Production didactique",
+    pratique: "Conception des fiches de préparation pédagogiques (جدادات) et supports de cours ",
+    lien: "https://drive.google.com/drive/folders/1phUkUpPuLqF9grotDy_au-QCrzt4W4Qm?usp=sharing"
+  },
+  {
+    numero: "02",
+    badge: "DISCIPLINAIRE",
+    badgeColor: "#9B5B7A",
+    icone: "Monitor",
+    titre: "Contenu Disciplinaire",
+    modules: "Algorithmique & Programmation · Logiciels Bureautique · Réseaux",
+    pratique: "Séances sur Word, Excel ",
+    lien: "https://drive.google.com/drive/folders/1JC6ykjocfsxuhusRMHYNmt871dr7cfTE?usp=sharing"
+  },
+  {
+    numero: "03",
+    badge: "GESTION",
+    badgeColor: "#7B6FA0",
+    icone: "Users",
+    titre: "Gestion de Classe",
+    modules: "Gestion des apprentissages 1 & 2 · Sciences de l'éducation",
+    pratique: "Gestion de classe, régulation des comportements, ",
+    lien: "https://drive.google.com/drive/folders/1jezt8fmqCzcjH9SEwt9Q85iPi-TMXURx?usp=sharing"
+  },
+  {
+    numero: "04",
+    badge: "ÉVALUATION",
+    badgeColor: "#B07A5A",
+    icone: "ClipboardCheck",
+    titre: "Évaluation des Apprentissages",
+    modules: "Évaluation des apprentissages · Gestion des apprentissages 2",
+    pratique: "Évaluation diagnostique, formative (TP) et sommative — CC3 du 18/05/2026",
+    lien: "https://drive.google.com/drive/folders/1phUkUpPuLqF9grotDy_au-QCrzt4W4Qm?usp=sharing"
+  },
+  {
+    numero: "05",
+    badge: "RÉFLEXIVITÉ",
+    badgeColor: "#5A7A8A",
+    icone: "Lightbulb",
+    titre: "Réflexivité & Recherche-Action",
+    modules: "Analyse des pratiques · Méthodologie de recherche-action",
+    pratique: " grilles d'observation, présent portfolio",
+    lien: "https://drive.google.com/drive/folders/1AChaD8fTr5qhC2Mn_Opb7yItfNcxn7h9?usp=sharing"
+  },
+  {
+    numero: "06",
+    badge: "INSTITUTIONNEL",
+    badgeColor: "#6A8A6A",
+    icone: "Building",
+    titre: "Dimension Institutionnelle",
+    modules: "Vie scolaire · Législation et éthique",
+    pratique: "Saisie des absences, assistance à la direction, respect de la confidentialité",
+    lien: "https://drive.google.com/drive/folders/1phUkUpPuLqF9grotDy_au-QCrzt4W4Qm?usp=sharing"
+  },
+  {
+    numero: "07",
+    badge: "TICE",
+    badgeColor: "#C084A0",
+    icone: "Laptop",
+    titre: "Outils Numériques & TICE",
+    modules: "TICE",
+    pratique: "Conception des diaporamas, TP sur machine, démonstrations projetées",
+    lien: "https://drive.google.com/drive/folders/1wMJ-mHUVSuGVpk6X3AEDkem67zg2mnNP?usp=sharing"
+  }
+]
