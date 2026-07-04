@@ -188,7 +188,7 @@ export default function Rapport() {
           <div className="space-y-2 text-sm mb-4" style={{ color: "#5A3D4A" }}>
             {[
               "Observation des classes, analyse du niveau des élèves",
-              "Découverte du programme officiel (Word, Excel)",
+              "Découverte du programme officiel (Word, Excel, Algorithme et Programmation)",
               "Prise de contact avec le tuteur de stage",
               "Premier contact avec les élèves",
             ].map(item => (
