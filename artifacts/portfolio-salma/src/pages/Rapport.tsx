@@ -162,7 +162,7 @@ export default function Rapport() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
             {[
               { icon: Building,   text: "Lycée Qualifiant Hommane El Fetouaki, Rabat" },
-              { icon: Calendar,   text: "février 2025 – Juin 2026" },
+              { icon: Calendar,   text: "février 2026 – Juin 2026" },
               { icon: Users,      text: "~36 élèves par classe" },
               { icon: School,     text: "Encadrement CRMEF Rabat–Salé–Kénitra" },
               { icon: UserCheck,  text: "Tuteur : M. BOUZIDI Abdelmajid" },
