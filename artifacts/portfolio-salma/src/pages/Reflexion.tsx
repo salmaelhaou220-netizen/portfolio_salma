@@ -1,4 +1,6 @@
-import { ThumbsUp, TrendingUp, Notebook, Star } from "lucide-react";
+import { ThumbsUp, TrendingUp, Notebook, Star, Sparkles, Eye, Lightbulb } from "lucide-react";
+
+const JOURNAL_ICONS = { Sparkles, Eye, TrendingUp, Lightbulb } as const;
 
 const STRENGTHS = [
   "Maîtrise du contenu disciplinaire en informatique",
@@ -17,10 +19,42 @@ const AXES = [
 ];
 
 const JOURNAL = [
-  { date: "Octobre 2024", title: "Première immersion en classe", text: "La prise de contact avec les élèves a révélé des niveaux très hétérogènes. J'ai ajusté mon approche en proposant des activités différenciées dès la deuxième séance, ce qui a amélioré la participation globale." },
-  { date: "Décembre 2024", title: "Intégration de Kahoot en classe", text: "L'utilisation de Kahoot pour la révision des notions de base en algorithmique a été un véritable catalyseur de motivation. Les élèves les plus discrets ont activement participé, signe d'une dynamique inclusive." },
-  { date: "Février 2025", title: "Projet de programmation en Python", text: "La mise en place d'un mini-projet collaboratif sur Replit a permis aux élèves de développer leur autonomie et leur esprit de résolution de problèmes. Une expérience riche, à reproduire et approfondir." },
-  { date: "Avril 2025", title: "Bilan de mi-stage", text: "Après six mois, je mesure le chemin parcouru : de stagiaire observatrice à praticienne réflexive. Chaque défi rencontré a été une opportunité de croissance professionnelle et personnelle." },
+  {
+    date: "Février 2026",
+    periode: "16 fév. – 28 fév.",
+    icone: "Sparkles",
+    titre: "Le choc de la réalité",
+    texte: "Ma première entrée dans la classe a été un véritable révélateur. Entre la théorie apprise au CRMEF et la réalité d'une classe de 37 élèves, l'écart était immédiat. J'ai compris dès ce premier jour que l'observation n'est pas passive — c'est déjà un acte pédagogique.",
+    theme: "Écart théorie / pratique",
+    couleur: "#C084A0",
+  },
+  {
+    date: "Mars 2026",
+    periode: "02 mars – 04 avr.",
+    icone: "Eye",
+    titre: "L'observation croisée",
+    texte: "Observer mes pairs m'a autant appris qu'observer les élèves. Chaque collègue avait sa façon d'entrer en relation avec la classe, de gérer le temps, de réagir à l'imprévu. J'ai commencé à construire ma propre vision de l'enseignement — non pas par imitation, mais par choix réfléchi.",
+    theme: "Identité professionnelle",
+    couleur: "#9B5B7A",
+  },
+  {
+    date: "Avril 2026",
+    periode: "09 avr. – 02 mai",
+    icone: "TrendingUp",
+    titre: "Monter en autonomie",
+    texte: "En avril, j'ai commencé à me sentir enseignante — pas encore stagiaire qui observe, mais professeure qui prend des décisions. Gérer le rythme d'une séance, adapter une explication, jongler entre le français et le darija pour rejoindre tous les élèves : chaque cours m'a rendue un peu plus à l'aise dans ce rôle.",
+    theme: "Autonomie · Différenciation",
+    couleur: "#7B6FA0",
+  },
+  {
+    date: "Mai 2026",
+    periode: "11 mai – 23 mai",
+    icone: "Lightbulb",
+    titre: "Le CC3 comme miroir",
+    texte: "Le Contrôle Continu N°3 du 18 mai a été un moment de vérité — autant pour les élèves que pour moi. Corriger les copies m'a permis de mesurer ce qui avait réellement été compris, et ce que je n'avais pas su transmettre clairement. L'évaluation n'est pas une fin, c'est un point de départ pour progresser ensemble.",
+    theme: "Évaluation · Réflexivité",
+    couleur: "#B07A5A",
+  },
 ];
 
 const AUTOEVAL = [
@@ -99,15 +133,25 @@ export default function Reflexion() {
           <h3 className="font-serif text-xl font-semibold text-slate-800">Journal Réflexif</h3>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {JOURNAL.map(({ date, title, text }) => (
-            <div key={date} className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm"
-              style={{ borderLeft: "4px solid #C084A0" }}>
-              <div className="inline-block text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md mb-3"
-                style={{ color: "#C084A0", background: "#F5E6EE" }}>{date}</div>
-              <h4 className="font-semibold text-slate-800 text-sm mb-2">{title}</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">{text}</p>
-            </div>
-          ))}
+          {JOURNAL.map(({ date, periode, icone, titre, texte, theme, couleur }) => {
+            const Icon = JOURNAL_ICONS[icone as keyof typeof JOURNAL_ICONS] ?? Sparkles;
+            return (
+              <div key={date} className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm"
+                style={{ borderLeft: `4px solid ${couleur}` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md"
+                    style={{ color: couleur, background: `${couleur}1A` }}>
+                    <Icon size={12} /> {date}
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-medium">{periode}</span>
+                </div>
+                <h4 className="font-semibold text-slate-800 text-sm mb-2">{titre}</h4>
+                <p className="text-xs text-slate-500 leading-relaxed mb-3">{texte}</p>
+                <span className="inline-block text-[10px] font-semibold px-2.5 py-1 rounded-full"
+                  style={{ background: `${couleur}1A`, color: couleur }}>{theme}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
 

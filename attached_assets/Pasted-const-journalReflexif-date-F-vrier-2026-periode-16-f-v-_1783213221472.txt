@@ -1,0 +1,38 @@
+const journalReflexif = [
+  {
+    date: "Février 2026",
+    periode: "16 fév. – 28 fév.",
+    icone: "Sparkles",
+    titre: "Le choc de la réalité",
+    texte: "Ma première entrée dans la classe a été un véritable révélateur. Entre la théorie apprise au CRMEF et la réalité d'une classe de 37 élèves, l'écart était immédiat. J'ai compris dès ce premier jour que l'observation n'est pas passive — c'est déjà un acte pédagogique.",
+    theme: "Écart théorie / pratique",
+    couleur: "#C084A0"
+  },
+  {
+    date: "Mars 2026",
+    periode: "02 mars – 04 avr.",
+    icone: "Eye",
+    titre: "L'observation croisée",
+    texte: "Observer mes pairs m'a autant appris qu'observer les élèves. Chaque collègue avait sa façon d'entrer en relation avec la classe, de gérer le temps, de réagir à l'imprévu. J'ai commencé à construire ma propre vision de l'enseignement — non pas par imitation, mais par choix réfléchi.",
+    theme: "Identité professionnelle",
+    couleur: "#9B5B7A"
+  },
+  {
+    date: "Avril 2026",
+    periode: "09 avr. – 02 mai",
+    icone: "TrendingUp",
+    titre: "Monter en autonomie",
+    texte: "En avril, j'ai commencé à me sentir enseignante — pas encore stagiaire qui observe, mais professeure qui prend des décisions. Gérer le rythme d'une séance, adapter une explication, jongler entre le français et le darija pour rejoindre tous les élèves : chaque cours m'a rendue un peu plus à l'aise dans ce rôle.",
+    theme: "Autonomie · Différenciation",
+    couleur: "#7B6FA0"
+  },
+  {
+    date: "Mai 2026",
+    periode: "11 mai – 23 mai",
+    icone: "Lightbulb",
+    titre: "Le CC3 comme miroir",
+    texte: "Le Contrôle Continu N°3 du 18 mai a été un moment de vérité — autant pour les élèves que pour moi. Corriger les copies m'a permis de mesurer ce qui avait réellement été compris, et ce que je n'avais pas su transmettre clairement. L'évaluation n'est pas une fin, c'est un point de départ pour progresser ensemble.",
+    theme: "Évaluation · Réflexivité",
+    couleur: "#B07A5A"
+  }
+]
