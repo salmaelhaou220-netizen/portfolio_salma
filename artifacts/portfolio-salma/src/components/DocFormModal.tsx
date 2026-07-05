@@ -16,9 +16,9 @@ const CATEGORIES = [
   { value: "fiches",      label: "Fiches de Préparation" },
   { value: "grilles",     label: "Grilles d'Observation" },
   { value: "supports",    label: "Supports de Cours" },
+  { value: "evaluations", label: "Évaluations" },
   { value: "rapport",     label: "Rapport de Stage" },
   { value: "pff",         label: "Projet de Fin de Formation" },
-  { value: "productions", label: "Autres Productions" },
 ];
 
 const TYPES = [

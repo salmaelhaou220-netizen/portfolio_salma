@@ -238,8 +238,9 @@ export default function Rapport() {
             posture="expert"
           />
           <div className="flex items-center gap-3 flex-wrap mt-4 pt-4" style={{ borderTop: "1px solid #F0D0E0" }}>
-            <DocLink href="/documents?cat=fiches"    icon={ClipboardList} label="Fiches de préparation" />
-            <DocLink href="/documents?cat=supports"  icon={Presentation}  label="Supports de cours" />
+            <DocLink href="/documents?cat=fiches"      icon={ClipboardList} label="Fiches de préparation" />
+            <DocLink href="/documents?cat=supports"    icon={Presentation}  label="Supports de cours" />
+            <DocLink href="/documents?cat=evaluations" icon={ClipboardList} label="Évaluations" />
           </div>
         </TimelineCard>
 
