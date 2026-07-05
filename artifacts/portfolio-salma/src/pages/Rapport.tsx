@@ -212,7 +212,7 @@ export default function Rapport() {
           <SeanceCard
             color="#7C3AED"
             title="Séance 1 — Mise en forme de texte avec Word"
-            classe="TSCF 1"
+            classe="TSCF 1 & TSCF 3"
             methode="Mise en situation, accroche avec un document mal formaté"
             posture="expert"
           />
