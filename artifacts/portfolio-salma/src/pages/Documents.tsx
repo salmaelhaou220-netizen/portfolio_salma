@@ -352,12 +352,14 @@ export default function Documents() {
                       <div className="flex items-center gap-3 px-5 py-6 text-sm text-slate-400 italic">
                         <Folder size={16} className="text-slate-300" />
                         Aucun document dans cette catégorie.
-                        <button
-                          onClick={() => { setFormCat(cat); setEditDoc(null); setFormOpen(true); }}
-                          className="text-blue-600 text-xs font-semibold not-italic hover:underline ml-auto"
-                        >
-                          + Ajouter
-                        </button>
+                        {isAdmin && (
+                          <button
+                            onClick={() => { setFormCat(cat); setEditDoc(null); setFormOpen(true); }}
+                            className="text-blue-600 text-xs font-semibold not-italic hover:underline ml-auto"
+                          >
+                            + Ajouter
+                          </button>
+                        )}
                       </div>
                     ) : (
                       <ul>
