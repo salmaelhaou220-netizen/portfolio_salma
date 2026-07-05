@@ -1,7 +1,7 @@
 [build]
+  base = "artifacts/portfolio-salma"
   command = "pnpm install --no-frozen-lockfile && pnpm run build"
-  publish = "dist"
+  publish = "artifacts/portfolio-salma/dist"
 
 [build.environment]
   NODE_VERSION = "22"
-  PNPM_FLAGS = "--no-frozen-lockfile"
